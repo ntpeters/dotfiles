@@ -2,36 +2,40 @@ set nocompatible
 filetype off
 
 " Setup Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
-" Setup Plugin Bundles
-Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'myusuf3/numbers.vim'
-Bundle 'vim-scripts/a.vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'scrooloose/syntastic'
-Bundle 'bling/vim-airline'
-Bundle 'bling/vim-bufferline'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'mbbill/undotree'
-Bundle 'tpope/vim-fugitive'
-Bundle 'godlygeek/tabular'
-Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'guns/xterm-color-table.vim'
-Bundle 'ntpeters/vim-indent-guides'
-Bundle 'ntpeters/vim-better-whitespace'
-"Bundle 'svenfuchs/vim-todo'
-"Bundle 'svenfuchs/vim-layout'
-Bundle 'edthedev/vim-todo'
+" Setup Plugin Plugins
+Plugin 'gmarik/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'vim-scripts/a.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/syntastic'
+Plugin 'bling/vim-airline'
+Plugin 'bling/vim-bufferline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mbbill/undotree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'guns/xterm-color-table.vim'
+Plugin 'ntpeters/vim-indent-guides'
+Plugin 'ntpeters/vim-better-whitespace'
+"Plugin 'svenfuchs/vim-todo'
+"Plugin 'svenfuchs/vim-layout'
+Plugin 'edthedev/vim-todo'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
 
-" Setup Theme Bundles
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'vim-scripts/xoria256.vim'
+" Setup Theme Plugins
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'vim-scripts/xoria256.vim'
+call vundle#end()
 
 filetype plugin indent on
 set modelines=0
@@ -83,6 +87,14 @@ au VimEnter * ToggleStripWhitespaceOnSave
 " Tell vim-whitespace to disable the current line highlightin
 au VimEnter * CurrentLineWhitespaceOff hard
 
+" Enable CtrlP extensions
+let g:ctrlp_extensions = ['funky']
+
+" Keys for CtrlP Funky
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
+
 set autoindent
 set smartindent
 " Tab width in spaces
@@ -112,6 +124,11 @@ set backspace=indent,eol,start
 set laststatus=2
 set number
 set autowrite
+
+" Enable mouse support for Visual and Normal modes
+set mouse=vn
+set ttymouse=xterm2
+set ttyfast
 
 " Enable persistent undo, and put undo files in their own directory to prevent
 " pollution of project directories
@@ -160,8 +177,8 @@ set viewdir=~/.vim/views
 let mapleader = ","
 
 " Set search key to /
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 set ignorecase
 set smartcase
@@ -201,10 +218,6 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
@@ -226,13 +239,18 @@ function! <SID>EscapePasteMode()
 endfunction
 
 " Set 'jj' to escape. Homerow OP
-inoremap jj <ESC>
+imap jj <ESC>
 
+" Remaps for easier buffer navigation
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Shift+dir to jump paragraphs
+nnoremap <S-j> <S-{>
+nnoremap <S-k> <S-}>
 
 " More laziness remaps
 nnoremap :q :q!
@@ -260,11 +278,13 @@ set t_Co=256
 
 " Set the color scheme
 colorscheme jellybeans
+"colorscheme xoria256
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
-let &colorcolumn="80,".join(range(120,255),",")
+"let &colorcolumn="80,".join(range(120,255),",")
+let &colorcolumn="80,120,121"
 highlight ColorColumn ctermbg=236
-au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+au BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 " Set color for cursor line and column
 highlight CursorLine ctermbg=232

@@ -35,7 +35,7 @@ prompt steeef
 
 # Aliases¬
 alias zshconfig="vim ~/.zshrc"
-alias intellij="sh /opt/idea-IC-133.331/bin/idea.sh"
+alias intellij="sh /opt/intellij/bin/idea.sh"
 alias sublime="/opt/sublime_text_3/sublime_text"
 alias cast="sudo systemctl stop iptables.service"
 alias nvidia-profiler="/opt/cuda/bin/computeprof"
@@ -44,6 +44,7 @@ alias lighttable="/opt/LightTable"
 alias py="python"
 alias updot="python ~/git/updot/updot.py"
 alias android-studio="/opt/android-studio/bin/studio.sh"
+alias grep="grep -nr "
 
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
