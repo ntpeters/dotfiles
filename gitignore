@@ -1,0 +1,111 @@
+# Compiled Object files #
+#########################
+*.slo
+*.lo
+*.o
+*.ko
+
+# Compiled Dynamic libs #
+#########################
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Compiled Static libs #
+########################
+*.lib
+*.lai
+*.la
+*.a
+
+# Executables #
+###############
+*.exe
+*.out
+*.app
+
+# CMake files #
+###############
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+# Ignore dirs #
+###############
+bin/
+build/
+gen/
+out/
+
+# Vim files #
+#############
+*.un~
+*.swp
+*~
+
+# Logs and Databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# MacOS #
+#########
+.DS_Store*
+._*
+.Spotlight-*
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# XCode #
+#########
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+
+# Android files #
+#################
+*.apk
+*.ap_
+*.dex
+local.properties
+
+# Java #
+########
+*.class
+*.war
+*.ear
+
+# Eclipse files #
+#################
+*.classpath
+*.project
+*.metadata/
+
+# Intellij files #
+##################
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Python #
+##########
+*.py[cod]
+__pycache__
+pip-log.txt
