@@ -1,17 +1,24 @@
 [user]
-	name = ntpeters
-	emal = ntpeters@mtu.edu
+	name = Nate Peterson
 	email = ntpeters@mtu.edu
-	editor = vim
 [github]
 	user = ntpeters
 [core]
 	editor = vim
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab
+	excludesfile = ~/.gitignore
 [color]
 	ui = true
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+[help]
+	autocorrect = 1
 [alias]
-    local = log --branches --not --remotes --decorate --oneline
-    changes=diff --name-status -r
-    diffstat=diff --stat -r
-    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-    lc = log ORIG_HEAD.. --stat --no-merges
+	local = log --branches --not --remotes --decorate --oneline
+	changes=diff --name-status -r
+	diffstat=diff --stat -r
+	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+	lc = log ORIG_HEAD.. --stat --no-merges
