@@ -1,67 +1,112 @@
-# Compiled Object files #
-#########################
-*.slo
-*.lo
-*.o
-*.ko
-
-# Compiled Dynamic libs #
-#########################
-*.so
-*.so.*
-*.dylib
-*.dll
-
-# Compiled Static libs #
-########################
-*.lib
-*.lai
-*.la
-*.a
-
-# Executables #
-###############
-*.exe
-*.out
-*.app
+########
+# Misc #
+########
 
 # CMake files #
-###############
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 install_manifest.txt
 
 # Ignore dirs #
-###############
-bin/
-build/
-gen/
-out/
-
-# Vim files #
-#############
-*.un~
-*.swp
-*~
+[Bb]in/
+[Bb]uild/
+[Gg]en/
+[Oo]ut/
+[Tt]mp/
+[Oo]bj/
 
 # Logs and Databases #
-######################
 *.log
 *.sql
 *.sqlite
 
+# Tags #
+TAGS
+!TAGS/
+tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GPATH
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+##################
+# Compiled Files #
+##################
+
+# Object files #
+*.slo
+*.lo
+*.o
+*.ko
+*.obj
+*.elf
+
+# Dynamic libs #
+*.so
+*.so.*
+*.dylib
+
+
+#  Static libs #
+*.lib
+*.lai
+*.la
+*.lo
+*.a
+
+# Executables #
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+#############
+# Platforms #
+#############
+
 # MacOS #
-#########
 .DS_Store*
 ._*
-.Spotlight-*
+.Spotlight-V100
 .Trashes
+.AppleDouble
+.LSOverride
+Icon
+.AppleDB
+.AppleDesktop
+
+# Linux #
+.directory
+
+# Windows #
 ehthumbs.db
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Android files #
+*.apk
+*.ap_
+*.dex
+
+################
+# Environments #
+################
 
 # XCode #
-#########
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -77,35 +122,93 @@ profile
 DerivedData
 *.hmap
 *.ipa
-
-# Android files #
-#################
-*.apk
-*.ap_
-*.dex
-local.properties
-
-# Java #
-########
-*.class
-*.war
-*.ear
+*.xcuserstate
+Pods/
 
 # Eclipse files #
-#################
+*.metadata/
+*.settings/
+.loadpath
+.target
+local.properties
+*.launch
 *.classpath
 *.project
-*.metadata/
+*.bak
+*.tmp
 
 # Intellij files #
-##################
 .idea/
+.idea_modules/
 *.iml
 *.ipr
 *.iws
 
+# Sublime Text #
+*.sublime-workspace
+*.sublime-project
+sftp-config.json
+
+# Vim files #
+*.un~
+*.swp
+*~
+
+# Visual Studio #
+*.suo
+*.user
+*.sln.docstates
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+*.ide/
+
+#############
+# Languages #
+#############
+
+# Java #
+*.class
+*.jar
+*.war
+*.ear
+
 # Python #
-##########
 *.py[cod]
-__pycache__
+__pycache__/
+env/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
 pip-log.txt
+pip-delete-this-directory.txt
+.Python
+.installed.cfg
+*.egg
+*.manifest
+*.spec
+*.mo
+*.pot
+
+# Scala #
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project
+.history/
+.cache/
+.lib/
+dist/*
+.scala_dependencies
+.worksheet
