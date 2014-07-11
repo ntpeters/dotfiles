@@ -1,0 +1,31 @@
+[user]
+	name = ntpeters
+	emal = ntpeters@mtu.edu
+	email = ntpeters@mtu.edu
+	editor = vim
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+[github]
+	user = ntpeters
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+    local = log --branches --not --remotes --decorate --oneline
+    changes=diff --name-status -r
+    diffstat=diff --stat -r
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    lc = log ORIG_HEAD.. --stat --no-merges
