@@ -195,7 +195,6 @@ pip-delete-this-directory.txt
 .Python
 .installed.cfg
 *.egg
-*.manifest
 *.spec
 *.mo
 *.pot
