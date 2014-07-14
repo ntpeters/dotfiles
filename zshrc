@@ -4,6 +4,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+export ANTIGEN_DEFAULT_REPO_URL=https://github.com/robbyrussell/oh-my-zsh.git
+
 source ~/.antigen/antigen.zsh
 
 antigen bundle sorin-ionescu/prezto
