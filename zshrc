@@ -44,7 +44,7 @@ alias nvidia-profiler="/opt/cuda/bin/computeprof"
 alias nprof=nvidia-profiler
 alias lighttable="/opt/LightTable"
 alias py="python"
-alias updot="python ~/git/updot/updot.py"
+alias updot="python ~/.updot/updot.py"
 alias android-studio="/opt/android-studio/bin/studio.sh"
 alias grep="grep -nr "
 
