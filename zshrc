@@ -8,9 +8,8 @@ export ANTIGEN_DEFAULT_REPO_URL=https://github.com/robbyrussell/oh-my-zsh.git
 
 source ~/.antigen/antigen.zsh
 
-antigen bundle sorin-ionescu/prezto
+antigen bundle https://github.com/sorin-ionescu/prezto
 
-antigen bundle git
 antigen bundle pip
 antigen bundle command-not-found
 
@@ -20,6 +19,12 @@ antigen apply
 
 # Ensure 256 color mode is enabled
 export TERM=xterm-256color
+
+# Link the Prezto dir from the Antigen dir to the home dir
+if [[ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]]; then
+    echo "Linking Prezto into '~/.zprezto'..."
+    cp -lr ~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto "${ZDOTDIR:-$HOME}/.zprezto"
+fi
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
