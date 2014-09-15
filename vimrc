@@ -111,7 +111,7 @@ set smarttab
 
 set encoding=utf-8
 set scrolloff=3
-set showmode
+set noshowmode
 set showcmd
 set hidden
 set wildmenu
