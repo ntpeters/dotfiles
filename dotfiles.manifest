@@ -1,9 +1,6 @@
 # updot.py Dotfile Manifest
 # This file is used to define which dotfiles you want tracked with updot.py
 # Add the path to each dotfile you wish to track below this line
-<<<<<<< HEAD
-
-=======
 ~/.vimrc
 ~/.zshrc
 ~/.gitconfig
@@ -13,4 +10,3 @@
 ~/.zpreztorc
 ~/.zprofile
 ~/.zshenv
->>>>>>> 21805e94e9031e8b97cd40dfa21a81b8e5342d6d
