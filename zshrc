@@ -51,7 +51,7 @@ alias lighttable="/opt/LightTable"
 alias py="python"
 alias updot="python ~/.updot/updot.py"
 alias android-studio="/opt/android-studio/bin/studio.sh"
-alias grep="grep -nr "
+alias grep="grep -n "
 
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
