@@ -49,7 +49,6 @@ alias nvidia-profiler="/opt/cuda/bin/computeprof"
 alias nprof=nvidia-profiler
 alias lighttable="/opt/LightTable"
 alias py="python"
-alias updot="python ~/.updot/updot.py"
 alias android-studio="/opt/android-studio/bin/studio.sh"
 alias grep="grep -n "
 
@@ -65,3 +64,9 @@ export SCALA_HOME=/opt/scala-2.10.3
 export PATH=$PATH:$SCALA_HOME/bin
 export LLVM_SRC_ROOT=/opt/llvm-src
 export PATH=$PATH:/home/nate/.gem/ruby/1.9.1/gems
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=/home/ntpeters/.rvm/gems/ruby-2.1.4/bin:/home/ntpeters/.rvm/gems/ruby-2.1.4@global/bin:/home/ntpeters/.rvm/rubies/ruby-2.1.4/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/opt/cuda/bin:/opt/scala-2.10.3/bin:/home/nate/.gem/ruby/1.9.1/gems:/home/ntpeters/.rvm/bin
+export PATH=/home/ntpeters/.rvm/gems/ruby-2.1.4/bin:/home/ntpeters/.rvm/gems/ruby-2.1.4@global/bin:/home/ntpeters/.rvm/rubies/ruby-2.1.4/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/opt/cuda/bin:/opt/scala-2.10.3/bin:/home/nate/.gem/ruby/1.9.1/gems:/home/ntpeters/.rvm/bin
+export PATH=/home/ntpeters/.rvm/gems/ruby-2.1.4/bin:/home/ntpeters/.rvm/gems/ruby-2.1.4@global/bin:/home/ntpeters/.rvm/rubies/ruby-2.1.4/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/opt/cuda/bin:/opt/scala-2.10.3/bin:/home/nate/.gem/ruby/1.9.1/gems:/home/ntpeters/.rvm/bin
+export PATH="$PATH:$HOME/.updot/updot"
