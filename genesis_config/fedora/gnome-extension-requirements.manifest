@@ -1,0 +1,5 @@
+maximus-two@wilfinitlike.gmail.com=xprop xwininfo xorg-x11-utils
+nvidiatemp@baco=nvidia-smi nvidia-settings
+tracker-search-provider@sinnix.de=tracker
+system-monitor@paradoxxx.zero.gmail.com=lm_sensors
+SettingsCenter@vistaus.nl=dconf-editor gconf-editor
