@@ -1,6 +1,17 @@
 set nocompatible
 filetype off
 
+" Install Vundle if needed
+let installedVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone git://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let installedVundle=0
+endif
+
 " Setup Vundle
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
@@ -36,6 +47,13 @@ Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-scripts/xoria256.vim'
 call vundle#end()
+
+" Install plugins if Vundle was just installed
+if installedVundle == 0
+    echo "Installing Bundles..."
+    echo ""
+    :BundleInstall
+endif
 
 filetype plugin indent on
 set modelines=0
