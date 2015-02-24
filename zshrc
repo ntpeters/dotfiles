@@ -2,7 +2,12 @@
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+
+# Ensure Antigen is installed
+antigen_path=$(realpath ~/.antigen/antigen.zsh)
+if [[ ! -f "$antigen_path" ]]; then
+    curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh -o $antigen_path --create-dirs
+fi
 
 export ANTIGEN_DEFAULT_REPO_URL=https://github.com/robbyrussell/oh-my-zsh.git
 
