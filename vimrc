@@ -3,12 +3,12 @@ filetype off
 
 " Install Vundle if needed
 let installedVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
     echo "Installing Vundle..."
     echo ""
     silent !mkdir -p ~/.vim/bundle
-    silent !git clone git://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    silent !git clone git://github.com/gmarik/vundle ~/.vim/bundle/Vundle.vim
     let installedVundle=0
 endif
 
