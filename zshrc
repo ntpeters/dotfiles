@@ -47,7 +47,6 @@ prompt steeef
 # Aliases¬
 alias zshconfig="vim ~/.zshrc"
 alias py="python"
-alias grep="grep -n "
 
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
