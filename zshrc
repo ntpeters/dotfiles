@@ -48,6 +48,8 @@ prompt steeef
 alias zshconfig="vim ~/.zshrc"
 alias py="python"
 
+alias railserv="rails server -b $IP -p $PORT"
+
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f

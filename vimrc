@@ -18,7 +18,7 @@ call vundle#begin()
 
 " Setup Plugin Plugins
 Plugin 'gmarik/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -42,10 +42,16 @@ Plugin 'edthedev/vim-todo'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-endwise'
+"Plugin 'ervandew/supertab'
+Plugin 'ntpeters/vim-airline-colornum'
 
 " Setup Theme Plugins
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-scripts/xoria256.vim'
+Plugin 'ciaranm/inkpot'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -61,7 +67,7 @@ set modelines=0
 syntax on
 
 " Tell Airline to use Powerline fonts
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " Disable syntax checking for YouCompleteMe (using Syntastic instead)
 " This is needed for vim-gitgutter to work properly with YCM
@@ -127,7 +133,10 @@ set expandtab
 " tabstop/shiftstop worth of spaces
 set smarttab
 
+" Set the encoding Vim uses for display
 set encoding=utf-8
+" Set the encoding Vim writes files with
+set fileencoding=utf-8
 set scrolloff=3
 set noshowmode
 set showcmd
@@ -260,11 +269,21 @@ endfunction
 imap jj <ESC>
 
 " Remaps for easier buffer navigation
-nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Remaps for easier split opening
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader><S-w> <C-w>s<C-w>j
+
+" More sane split defaults
+set splitbelow
+set splitright
+
+" Normalize split sizes when terminal is resized
+au VimResized * <C-w>=
 
 " Shift+dir to jump paragraphs
 nnoremap <S-j> <S-{>
@@ -285,7 +304,12 @@ endfunction
 " Hit F9 to toggle spaces and tabs
 nmap <silent> <F9> :call <SID>ToggleTabs()<CR>
 
-set viewoptions=cursor,folds,slash,unix
+" Set options for 'mkview'
+set viewoptions=         " Ensure no other options are set
+set viewoptions+=cursor  " Cursor position in file
+set viewoptions+=folds   " All local fold options (ie. opened/closed/manual folds)
+set viewoptions+=slash   " Backslashes in filenames are replaced with foward slashes
+set viewoptions+=unix    " Use Unix EOL
 
 " Save/load current vim state when exiting/opening a file
 au VimLeave ?* mkview!
@@ -297,6 +321,7 @@ set t_Co=256
 " Set the color scheme
 colorscheme jellybeans
 "colorscheme xoria256
+"colorscheme inkpot
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
 "let &colorcolumn="80,".join(range(120,255),",")
@@ -307,46 +332,6 @@ au BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 " Set color for cursor line and column
 highlight CursorLine ctermbg=232
 highlight CursorColumn ctermbg=232
-
-" Current line number set colors to match vim-airline mode colors
-" Set line number color for insert and replace modes
-function! SetCursorLineNrColorInsert(mode)
-    " Insert mode: white on green to match airline
-    if a:mode == "i"
-        highlight CursorLineNr ctermfg=white ctermbg=22
-        " Replace mode: red on black
-    elseif a:mode == "r"
-        highlight CursorLineNr ctermfg=lightred ctermbg=black
-    endif
-endfunction
-
-" Set line number color for insert mode
-function! SetCursorLineNrColorVisual()
-    set updatetime=0
-    " Visual mode: white on red
-    highlight CursorLineNr ctermfg=white ctermbg=52
-    return ''
-endfunction
-
-" Resets the line number color to normal mode
-function! ResetCursorLineNrColor()
-    set updatetime=4000
-    highlight CursorLineNr ctermfg=white ctermbg=27
-endfunction
-
-" Remaps for setting line number color when entering visual mode
-vnoremap <silent> <expr> <SID>SetCursorLineNrColorVisual SetCursorLineNrColorVisual()
-nnoremap <silent> <script> v v<SID>SetCursorLineNrColorVisual<left><right>
-nnoremap <silent> <script> V V<SID>SetCursorLineNrColorVisual<left><right>
-nnoremap <silent> <script> <C-v> <C-v><SID>SetCursorLineNrColorVisual<left><right>
-
-" Auto commands for setting line number color based on mode
-augroup CursorLineNrColorSwap
-    autocmd!
-    autocmd InsertEnter * call SetCursorLineNrColorInsert(v:insertmode)
-    autocmd InsertLeave,VimEnter * call ResetCursorLineNrColor()
-    autocmd CursorHold * call ResetCursorLineNrColor()
-augroup END
 
 " Load custom vim settings if they exist in the current directory
 if filereadable(".vim.custom")
