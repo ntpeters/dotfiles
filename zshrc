@@ -68,3 +68,20 @@ export PATH=$JRE_HOME/bin:"$PATH"
 export PATH=$JAVA_HOME/bin:"$PATH"
 
 export PATH=$HOME/.updot:"$PATH"
+
+# Set path to synced dotfiles for status check
+export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
+
+dotstat="$HOME/.updot/dotstat.sh"
+# Ensure script is available, and get it if not
+if [ ! -f $dotstat ]; then
+    echo "Downloading dotstat.sh..."
+    curl https://gist.githubusercontent.com/ntpeters/bb100b43340d9bf8ac48/raw/dotstat.sh -o $dotstat --create-dirs --progress-bar
+    echo
+fi
+# Ensure script is executable
+if [ ! -x $dotstat ]; then
+    chmod a+x $dotstat
+fi
+# What's up with my dotfiles?
+bash $dotstat
