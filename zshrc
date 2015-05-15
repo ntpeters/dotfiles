@@ -72,7 +72,9 @@ export PATH=$HOME/.updot:"$PATH"
 # Set path to synced dotfiles for status check
 export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
 
+# Path to dotstat script
 dotstat="$HOME/.updot/dotstat.sh"
+
 # Ensure script is available, and get it if not
 if [ ! -f $dotstat ]; then
     echo "Downloading dotstat.sh..."
