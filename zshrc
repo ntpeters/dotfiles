@@ -1,7 +1,7 @@
 # Executes commands at the start of an interactive session.
 
 # Ensure Antigen is installed
-antigen_path="/home/$USER/.antigen/antigen.zsh"
+antigen_path="$HOME/.antigen/antigen.zsh"
 if [[ ! -f "$antigen_path" ]]; then
     curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh --create-dirs -o "$antigen_path"
 fi
@@ -27,7 +27,7 @@ export TERM=xterm-256color
 # Link the Prezto dir from the Antigen dir to the home dir
 if [[ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]]; then
     echo "Linking Prezto into '~/.zprezto'..."
-    cp -lr ~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto "${ZDOTDIR:-$HOME}/.zprezto"
+    ln -s "$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto" "${ZDOTDIR:-$HOME}/.zprezto"
 fi
 
 # Source Prezto
@@ -45,7 +45,7 @@ promptinit
 prompt steeef
 
 # Aliases¬
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="vim $HOME/.zshrc"
 alias py="python"
 
 alias railserv="rails server -b $IP -p $PORT"
