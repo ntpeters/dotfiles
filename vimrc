@@ -46,6 +46,7 @@ Plugin 'tacahiroy/ctrlp-funky'
 " Setup Theme Plugins
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-scripts/xoria256.vim'
+Plugin 'alem0lars/vim-colorscheme-darcula'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -297,6 +298,7 @@ set t_Co=256
 " Set the color scheme
 colorscheme jellybeans
 "colorscheme xoria256
+"colorscheme darcula
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
 "let &colorcolumn="80,".join(range(120,255),",")

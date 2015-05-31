@@ -17,3 +17,6 @@ export JDK_HOME=/usr/java/latest
 export JAVA_HOME=/usr/java/latest
 export PATH=$JRE_HOME/bin:"$PATH"
 export PATH=$JAVA_HOME/bin:"$PATH"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

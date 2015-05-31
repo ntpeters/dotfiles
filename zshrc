@@ -66,3 +66,9 @@ export PATH=$JRE_HOME/bin:"$PATH"
 export PATH=$JAVA_HOME/bin:"$PATH"
 
 export PATH=$HOME/.updot/updot:"$PATH"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
