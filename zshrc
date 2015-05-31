@@ -67,7 +67,6 @@ export JAVA_HOME=/usr/java/latest
 export PATH=$JRE_HOME/bin:"$PATH"
 export PATH=$JAVA_HOME/bin:"$PATH"
 
-<<<<<<< HEAD
 export PATH=$HOME/.updot/updot:"$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
@@ -75,8 +74,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-=======
-export PATH=$HOME/.updot:"$PATH"
 
 # Set path to synced dotfiles for status check
 export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
@@ -96,4 +93,3 @@ if [ ! -x $dotstat ]; then
 fi
 # What's up with my dotfiles?
 bash $dotstat
->>>>>>> f073e5953d9fee681e4a70cf99bb1bc9a9f592cf
