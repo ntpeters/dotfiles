@@ -1,7 +1,7 @@
 # Executes commands at the start of an interactive session.
 
 # Ensure Antigen is installed
-antigen_path="/home/$USER/.antigen/antigen.zsh"
+antigen_path="$HOME/.antigen/antigen.zsh"
 if [[ ! -f "$antigen_path" ]]; then
     curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh --create-dirs -o "$antigen_path"
 fi
@@ -27,7 +27,7 @@ export TERM=xterm-256color
 # Link the Prezto dir from the Antigen dir to the home dir
 if [[ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]]; then
     echo "Linking Prezto into '~/.zprezto'..."
-    cp -lr ~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto "${ZDOTDIR:-$HOME}/.zprezto"
+    ln -s "$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto" "${ZDOTDIR:-$HOME}/.zprezto"
 fi
 
 # Source Prezto
@@ -45,8 +45,10 @@ promptinit
 prompt steeef
 
 # Aliases¬
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="vim $HOME/.zshrc"
 alias py="python"
+
+alias railserv="rails server -b $IP -p $PORT"
 
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
@@ -65,6 +67,7 @@ export JAVA_HOME=/usr/java/latest
 export PATH=$JRE_HOME/bin:"$PATH"
 export PATH=$JAVA_HOME/bin:"$PATH"
 
+<<<<<<< HEAD
 export PATH=$HOME/.updot/updot:"$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
@@ -72,3 +75,25 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+=======
+export PATH=$HOME/.updot:"$PATH"
+
+# Set path to synced dotfiles for status check
+export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
+
+# Path to dotstat script
+dotstat="$HOME/.updot/dotstat.sh"
+
+# Ensure script is available, and get it if not
+if [ ! -f $dotstat ]; then
+    echo "Downloading dotstat.sh..."
+    curl https://gist.githubusercontent.com/ntpeters/bb100b43340d9bf8ac48/raw/dotstat.sh -o $dotstat --create-dirs --progress-bar
+    echo
+fi
+# Ensure script is executable
+if [ ! -x $dotstat ]; then
+    chmod a+x $dotstat
+fi
+# What's up with my dotfiles?
+bash $dotstat
+>>>>>>> f073e5953d9fee681e4a70cf99bb1bc9a9f592cf
