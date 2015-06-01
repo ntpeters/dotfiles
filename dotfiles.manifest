@@ -12,3 +12,4 @@
 ~/.zshenv
 ~/.genesis_config
 ~/.bashrc
+~/.config/terminator/config
