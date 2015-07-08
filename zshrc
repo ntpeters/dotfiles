@@ -55,17 +55,19 @@ alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
 
 # Set up paths
-export PATH=/opt/android-studio/bin:"$PATH"
-export PATH=/opt/idea/bin:"$PATH"
+#export PATH=/opt/android-studio/bin:"$PATH"
+#export PATH=/opt/idea/bin:"$PATH"
 
-export SCALA_HOME=/opt/scala
-export PATH=$SCALA_HOME/bin:"$PATH"
+#export SCALA_HOME=/opt/scala
+#export PATH=$SCALA_HOME/bin:"$PATH"
 
-export JRE_HOME=/usr/java/latest/jre
-export JDK_HOME=/usr/java/latest
-export JAVA_HOME=/usr/java/latest
-export PATH=$JRE_HOME/bin:"$PATH"
-export PATH=$JAVA_HOME/bin:"$PATH"
+#export JRE_HOME=/usr/java/latest/jre
+#export JDK_HOME=/usr/java/latest
+#export JAVA_HOME=/usr/java/latest
+#export PATH=$JRE_HOME/bin:"$PATH"
+#export PATH=$JAVA_HOME/bin:"$PATH"
+
+export PATH=/usr/local/bin:"$PATH"
 
 export PATH=$HOME/.updot:"$PATH"
 
