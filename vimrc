@@ -51,6 +51,7 @@ Plugin 'ntpeters/vim-airline-colornum'
 " Setup Theme Plugins
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-scripts/xoria256.vim'
+Plugin 'alem0lars/vim-colorscheme-darcula'
 Plugin 'ciaranm/inkpot'
 call vundle#end()
 
@@ -321,6 +322,7 @@ set t_Co=256
 " Set the color scheme
 colorscheme jellybeans
 "colorscheme xoria256
+"colorscheme darcula
 "colorscheme inkpot
 
 " Set columns as 80 and 120, and highlight anything beyond that in red

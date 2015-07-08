@@ -69,7 +69,13 @@ ttyctl -f
 
 export PATH=/usr/local/bin:"$PATH"
 
-export PATH=$HOME/.updot:"$PATH"
+export PATH=$HOME/.updot/updot:"$PATH"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Set path to synced dotfiles for status check
 export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
