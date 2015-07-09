@@ -53,6 +53,7 @@ Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-scripts/xoria256.vim'
 Plugin 'alem0lars/vim-colorscheme-darcula'
 Plugin 'ciaranm/inkpot'
+Plugin 'morhetz/gruvbox'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -324,6 +325,7 @@ colorscheme jellybeans
 "colorscheme xoria256
 "colorscheme darcula
 "colorscheme inkpot
+"colorscheme gruvbox
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
 "let &colorcolumn="80,".join(range(120,255),",")

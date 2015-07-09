@@ -49,6 +49,7 @@ alias zshconfig="vim $HOME/.zshrc"
 alias py="python"
 
 alias railserv="rails server -b $IP -p $PORT"
+alias updot="python ~/.updot/python.py"
 
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
@@ -68,8 +69,6 @@ ttyctl -f
 #export PATH=$JAVA_HOME/bin:"$PATH"
 
 export PATH=/usr/local/bin:"$PATH"
-
-export PATH=$HOME/.updot/updot:"$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
