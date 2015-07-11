@@ -54,6 +54,7 @@ Plugin 'vim-scripts/xoria256.vim'
 Plugin 'alem0lars/vim-colorscheme-darcula'
 Plugin 'ciaranm/inkpot'
 Plugin 'morhetz/gruvbox'
+Plugin 'riskempson/base16-vim'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -320,12 +321,15 @@ au VimEnter ?* silent loadview
 " Enable 256 color mode
 set t_Co=256
 
+"let base16colorspace=256
 " Set the color scheme
 colorscheme jellybeans
 "colorscheme xoria256
 "colorscheme darcula
 "colorscheme inkpot
 "colorscheme gruvbox
+"colorscheme base16-default
+"set background=dark
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
 "let &colorcolumn="80,".join(range(120,255),",")

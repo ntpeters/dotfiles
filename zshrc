@@ -68,6 +68,8 @@ ttyctl -f
 #export PATH=$JRE_HOME/bin:"$PATH"
 #export PATH=$JAVA_HOME/bin:"$PATH"
 
+export ANDROI_HOME=/Users/nate/Library/Android/sdk
+
 export PATH=/usr/local/bin:"$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
