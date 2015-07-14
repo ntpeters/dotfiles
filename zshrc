@@ -49,7 +49,7 @@ alias zshconfig="vim $HOME/.zshrc"
 alias py="python"
 
 alias railserv="rails server -b $IP -p $PORT"
-alias updot="python ~/.updot/python.py"
+alias updot="python ~/.updot/updot.py"
 
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
@@ -68,7 +68,7 @@ ttyctl -f
 #export PATH=$JRE_HOME/bin:"$PATH"
 #export PATH=$JAVA_HOME/bin:"$PATH"
 
-export ANDROI_HOME=/Users/nate/Library/Android/sdk
+export ANDROID_HOME=/Users/nate/Library/Android/sdk
 
 export PATH=/usr/local/bin:"$PATH"
 
