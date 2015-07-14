@@ -54,7 +54,6 @@ Plugin 'vim-scripts/xoria256.vim'
 Plugin 'alem0lars/vim-colorscheme-darcula'
 Plugin 'ciaranm/inkpot'
 Plugin 'morhetz/gruvbox'
-Plugin 'riskempson/base16-vim'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -70,7 +69,7 @@ set modelines=0
 syntax on
 
 " Tell Airline to use Powerline fonts
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 
 " Disable syntax checking for YouCompleteMe (using Syntastic instead)
 " This is needed for vim-gitgutter to work properly with YCM
