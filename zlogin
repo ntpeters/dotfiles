@@ -16,7 +16,7 @@
 
 # Print a random, hopefully interesting, adage.
 if (( $+commands[fortune] )); then
-  fortune -a
+  fortune -s -n 32
   print
 fi
 

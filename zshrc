@@ -1,22 +1,17 @@
 # Executes commands at the start of an interactive session.
 
 # Ensure Antigen is installed
-antigen_path="$HOME/.antigen/antigen.zsh"
+antigen_dir="$HOME/.antigen"
+antigen_path="$antigen_dir/antigen.zsh"
 if [[ ! -f "$antigen_path" ]]; then
-    curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh --create-dirs -o "$antigen_path"
+    git clone https://github.com/zsh-users/antigen.git "$antigen_dir"
+    #curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh --create-dirs -o "$antigen_path"
 fi
-
-# Set Antigen to pull packages from Oh-My-ZSH repo by default
-export ANTIGEN_DEFAULT_REPO_URL=https://github.com/robbyrussell/oh-my-zsh.git
 
 # Load Antigen
 source "$antigen_path"
 
-# Setup Antigen bundles
-antigen bundle https://github.com/sorin-ionescu/prezto
-antigen bundle pip
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-syntax-highlighting
+antigen use prezto
 
 # Load Antigen bundles
 antigen apply
@@ -25,14 +20,9 @@ antigen apply
 export TERM=xterm-256color
 
 # Link the Prezto dir from the Antigen dir to the home dir
-if [[ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]]; then
-    echo "Linking Prezto into '~/.zprezto'..."
-    ln -s "$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-sorin-ionescu-SLASH-prezto" "${ZDOTDIR:-$HOME}/.zprezto"
-fi
-
-# Source Prezto
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+if [[ ! -d "${ZDOTDIR:-$HOME}/.prezto" ]]; then
+    echo "Linking Prezto into '~/.prezto'..."
+    ln -s "$antigen_dir/bundles/sorin-ionescu/prezto" "${ZDOTDIR:-$HOME}/.prezto"
 fi
 
 # Enable autocorrection of commands and args
@@ -54,19 +44,6 @@ alias updot="python ~/.updot/updot.py"
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
-
-# Set up paths
-#export PATH=/opt/android-studio/bin:"$PATH"
-#export PATH=/opt/idea/bin:"$PATH"
-
-#export SCALA_HOME=/opt/scala
-#export PATH=$SCALA_HOME/bin:"$PATH"
-
-#export JRE_HOME=/usr/java/latest/jre
-#export JDK_HOME=/usr/java/latest
-#export JAVA_HOME=/usr/java/latest
-#export PATH=$JRE_HOME/bin:"$PATH"
-#export PATH=$JAVA_HOME/bin:"$PATH"
 
 export ANDROID_HOME=/Users/nate/Library/Android/sdk
 
@@ -94,5 +71,8 @@ fi
 if [ ! -x $dotstat ]; then
     chmod a+x $dotstat
 fi
+
 # What's up with my dotfiles?
 bash $dotstat
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

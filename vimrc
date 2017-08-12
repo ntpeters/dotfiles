@@ -18,7 +18,7 @@ call vundle#begin()
 
 " Setup Plugin Plugins
 Plugin 'gmarik/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -26,7 +26,8 @@ Plugin 'myusuf3/numbers.vim'
 Plugin 'vim-scripts/a.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-bufferline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mbbill/undotree'
@@ -34,19 +35,22 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'guns/xterm-color-table.vim'
-Plugin 'ntpeters/vim-indent-guides'
+"Plugin 'ntpeters/vim-indent-guides'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 "Plugin 'svenfuchs/vim-todo'
 "Plugin 'svenfuchs/vim-layout'
 Plugin 'edthedev/vim-todo'
 Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
+"Plugin 'tpope/vim-rails'
+"Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
-"Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 Plugin 'ntpeters/vim-airline-colornum'
+Plugin 'terryma/vim-multiple-cursors'
 
 " Setup Theme Plugins
 Plugin 'nanotech/jellybeans.vim'
@@ -54,6 +58,7 @@ Plugin 'vim-scripts/xoria256.vim'
 Plugin 'alem0lars/vim-colorscheme-darcula'
 Plugin 'ciaranm/inkpot'
 Plugin 'morhetz/gruvbox'
+Plugin 'tomasr/molokai'
 call vundle#end()
 
 " Install plugins if Vundle was just installed
@@ -68,6 +73,8 @@ set modelines=0
 
 syntax on
 
+let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
+
 " Tell Airline to use Powerline fonts
 let g:airline_powerline_fonts = 1
 
@@ -77,6 +84,7 @@ let g:ycm_enable_diagnostic_signs = 0
 
 " Tell gitgutter to always show sign column
 "let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " Modify Rainbow Parenthesis colors
 let g:rbpt_colorpairs = [
@@ -108,18 +116,14 @@ au Syntax * RainbowParenthesesLoadBraces
 au VimEnter * IndentGuidesToggle
 
 " Tell vim-whitespace to strip whitespace on save
-au VimEnter * ToggleStripWhitespaceOnSave
+au VimEnter * EnableStripWhitespaceOnSave
 
 " Tell vim-whitespace to disable the current line highlightin
-au VimEnter * CurrentLineWhitespaceOff hard
+au VimEnter * CurrentLineWhitespaceOff soft
 
 " Enable CtrlP extensions
 let g:ctrlp_extensions = ['funky']
 
-" Keys for CtrlP Funky
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
 
 set autoindent
 set smartindent
@@ -205,8 +209,13 @@ set viewdir=~/.vim/views
 " Remap leader from '\' to ','
 let mapleader = ","
 
+" Keys for CtrlP Funky
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
+
 " Set search key to /
-"nnoremap / /\v
+nnoremap / /\v
 "vnoremap / /\v
 
 set ignorecase
@@ -230,8 +239,8 @@ set formatoptions=qrn1
 " Show whitespace characters
 set list
 set listchars=tab:▸\ ,eol:¬
-"set list listchars=tab:>-,trail:.,extends:>
-
+"set listchars=tab:-_
+"
 " Map Ctrl+N to open the NERDTree sidebar
 nmap <silent> <c-n> :NERDTreeToggle<cr>
 autocmd vimenter * if !argc() | NERDTree | endif
@@ -320,20 +329,23 @@ au VimEnter ?* silent loadview
 " Enable 256 color mode
 set t_Co=256
 
-"let base16colorspace=256
+let base16colorspace=256
 " Set the color scheme
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme base16-material-darker
+"colorscheme base16-material-palenight
+"colorscheme base16-material
 "colorscheme xoria256
 "colorscheme darcula
 "colorscheme inkpot
 "colorscheme gruvbox
 "colorscheme base16-default
-"set background=dark
+"colorscheme molokai
+set background=dark
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
-"let &colorcolumn="80,".join(range(120,255),",")
 let &colorcolumn="80,120,121"
-highlight ColorColumn ctermbg=236
+highlight ColorColumn ctermbg=19
 au BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 " Set color for cursor line and column

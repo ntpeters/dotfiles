@@ -1,15 +1,15 @@
 # updot.py Dotfile Manifest
 # This file is used to define which dotfiles you want tracked with updot.py
-# Add the path to each dotfile you wish to track below this line
-~/.vimrc
-~/.zshrc
-~/.gitconfig
-~/.gitignore
-~/.zlogin
-~/.zlogout
-~/.zpreztorc
-~/.zprofile
-~/.zshenv
-~/.genesis_config
-~/.bashrc
-~/.config/terminator/config
+# Add the path to each dotfile (relative to your home directory) you wish to track below this line
+.vimrc
+.zshrc
+.gitconfig
+.gitignore
+.zlogin
+.zlogout
+.zpreztorc
+.zprofile
+.zshenv
+.genesis_config
+.bashrc
+.config/terminator/config
