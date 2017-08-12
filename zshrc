@@ -56,7 +56,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Set path to synced dotfiles for status check
-export LOCAL_DOTFILES_REPOSITORY="$HOME/dotfiles"
+export LOCAL_DOTFILES_REPOSITORY="$HOME/.dotfiles"
 
 # Path to dotstat script
 dotstat="$HOME/.updot/dotstat.sh"
