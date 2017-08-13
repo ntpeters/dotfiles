@@ -1,78 +1,91 @@
 set nocompatible
-filetype off
 
-" Install Vundle if needed
-let installedVundle=1
-let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle..."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone git://github.com/gmarik/vundle ~/.vim/bundle/Vundle.vim
-    let installedVundle=0
+" Install Plug if needed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Setup Vundle
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+" Setup Plug
+call plug#begin('~/.vim/bundle')
 
-" Setup Plugin Plugins
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'vim-scripts/a.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/syntastic'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'bling/vim-bufferline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mbbill/undotree'
-Plugin 'tpope/vim-fugitive'
-Plugin 'godlygeek/tabular'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'guns/xterm-color-table.vim'
-"Plugin 'ntpeters/vim-indent-guides'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'ntpeters/vim-better-whitespace'
-"Plugin 'svenfuchs/vim-todo'
-"Plugin 'svenfuchs/vim-layout'
-Plugin 'edthedev/vim-todo'
-Plugin 'jeetsukumaran/vim-buffergator'
-"Plugin 'kien/ctrlp.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tacahiroy/ctrlp-funky'
-"Plugin 'tpope/vim-rails'
-"Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-endwise'
-Plugin 'ervandew/supertab'
-Plugin 'ntpeters/vim-airline-colornum'
-Plugin 'terryma/vim-multiple-cursors'
+" Setup Plugins
+Plug 'Valloric/YouCompleteMe', { 'on': [] }
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
+Plug 'myusuf3/numbers.vim'
+Plug 'vim-scripts/a.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/syntastic', { 'on': [] }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-bufferline'
+Plug 'airblade/vim-gitgutter'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-fugitive'
+Plug 'godlygeek/tabular'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'guns/xterm-color-table.vim'
+"Plug 'ntpeters/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle'}
+Plug 'ntpeters/vim-better-whitespace'
+"Plug 'svenfuchs/vim-todo'
+"Plug 'svenfuchs/vim-layout'
+Plug 'edthedev/vim-todo'
+Plug 'jeetsukumaran/vim-buffergator'
+"Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
+"Plug 'tpope/vim-rails'
+"Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-endwise'
+Plug 'ervandew/supertab'
+Plug 'ntpeters/vim-airline-colornum'
+Plug 'terryma/vim-multiple-cursors'
 
 " Setup Theme Plugins
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'vim-scripts/xoria256.vim'
-Plugin 'alem0lars/vim-colorscheme-darcula'
-Plugin 'ciaranm/inkpot'
-Plugin 'morhetz/gruvbox'
-Plugin 'tomasr/molokai'
-call vundle#end()
+"Plug 'nanotech/jellybeans.vim'
+"Plug 'vim-scripts/xoria256.vim'
+"Plug 'alem0lars/vim-colorscheme-darcula'
+"Plug 'ciaranm/inkpot'
+"Plug 'morhetz/gruvbox'
+"Plug 'tomasr/molokai'
+call plug#end()
 
-" Install plugins if Vundle was just installed
-if installedVundle == 0
-    echo "Installing Bundles..."
-    echo ""
-    :BundleInstall
-endif
+" Disable unused builtin plugins
+let g:loaded_gzip              = 1
+let g:loaded_tar               = 1
+let g:loaded_tarPlugin         = 1
+let g:loaded_zip               = 1
+let g:loaded_zipPlugin         = 1
+let g:loaded_rrhelper          = 1
+let g:loaded_2html_plugin      = 1
+let g:loaded_vimball           = 1
+let g:loaded_vimballPlugin     = 1
+let g:loaded_getscript         = 1
+let g:loaded_getscriptPlugin   = 1
+let g:loaded_netrw             = 1
+let g:loaded_netrwPlugin       = 1
+let g:loaded_netrwSettings     = 1
+let g:loaded_netrwFileHandlers = 1
+let g:loaded_logipat           = 1
 
-filetype plugin indent on
+"filetype plugin indent on
 set modelines=0
 
-syntax on
+" Don't use menus for gvim
+set guioptions=M
 
+"Delay syntatic load until we aren't doing anything
+augroup LazySyntatic
+  autocmd!
+  autocmd CursorHold * :call plug#load('syntastic')
+  autocmd CursorHold * :autocmd! LazySyntatic
+augroup END
+
+" Base16 themes require running a shell script...
 let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
 
 " Tell Airline to use Powerline fonts
@@ -83,34 +96,34 @@ let g:airline_powerline_fonts = 1
 let g:ycm_enable_diagnostic_signs = 0
 
 " Tell gitgutter to always show sign column
-"let g:gitgutter_sign_column_always = 1
 set signcolumn=yes
 
-" Modify Rainbow Parenthesis colors
-let g:rbpt_colorpairs = [
-            \ ['brown',       'RoyalBlue3'],
-            \ ['red',         'SeaGreen3'],
-            \ ['darkgray',    'DarkOrchid3'],
-            \ ['darkgreen',   'firebrick3'],
-            \ ['darkcyan',    'RoyalBlue3'],
-            \ ['darkred',     'SeaGreen3'],
-            \ ['darkmagenta', 'DarkOrchid3'],
-            \ ['brown',       'firebrick3'],
-            \ ['gray',        'RoyalBlue3'],
-            \ ['white',       'SeaGreen3'],
-            \ ['darkmagenta', 'DarkOrchid3'],
-            \ ['red',         'firebrick3'],
-            \ ['darkgreen',   'RoyalBlue3'],
-            \ ['darkcyan',    'SeaGreen3'],
-            \ ['darkred',     'DarkOrchid3'],
-            \ ['red',         'firebrick3'],
-            \ ]
+" Configure Rainbow Parenthese
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': ['red', 'blue', 'yellow', 'cyan', 'magenta', 'lightred', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+    \   'operators': '_,_',
+    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+    \   'separately': {
+    \       '*': {},
+    \       'tex': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \       },
+    \       'lisp': {
+    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+    \       },
+    \       'vim': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \       },
+    \       'html': {
+    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'css': 0,
+    \   }
+    \}
 
-" Setup Rainbow Parenthesis
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+" Enable Rainbow Parenthesis
+au VimEnter * RainbowToggle
 
 " Enable indent guides by default
 au VimEnter * IndentGuidesToggle
@@ -335,12 +348,6 @@ let base16colorspace=256
 colorscheme base16-material-darker
 "colorscheme base16-material-palenight
 "colorscheme base16-material
-"colorscheme xoria256
-"colorscheme darcula
-"colorscheme inkpot
-"colorscheme gruvbox
-"colorscheme base16-default
-"colorscheme molokai
 set background=dark
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
