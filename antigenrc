@@ -1,0 +1,9 @@
+# Configuration for Antigen (github.com/zsh-users/antigen)
+
+# Set Prezto as the ZSH config framework
+antigen use prezto
+
+# Setup Antigen bundles
+
+# Load Antigen bundles
+antigen apply

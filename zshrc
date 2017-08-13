@@ -1,29 +1,13 @@
 # Executes commands at the start of an interactive session.
 
 # Ensure Antigen is installed
-antigen_dir="$HOME/.antigen"
-antigen_path="$antigen_dir/antigen.zsh"
-if [[ ! -f "$antigen_path" ]]; then
-    git clone https://github.com/zsh-users/antigen.git "$antigen_dir"
-    #curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh --create-dirs -o "$antigen_path"
+if [[ ! -f "$ANTIGENZSH" ]]; then
+    git clone https://github.com/zsh-users/antigen.git "$ADOTDIR"
 fi
 
 # Load Antigen
-source "$antigen_path"
-
-antigen use prezto
-
-# Load Antigen bundles
-antigen apply
-
-# Ensure 256 color mode is enabled
-export TERM=xterm-256color
-
-# Link the Prezto dir from the Antigen dir to the home dir
-if [[ ! -d "${ZDOTDIR:-$HOME}/.prezto" ]]; then
-    echo "Linking Prezto into '~/.prezto'..."
-    ln -s "$antigen_dir/bundles/sorin-ionescu/prezto" "${ZDOTDIR:-$HOME}/.prezto"
-fi
+source "$ANTIGENZSH"
+antigen init $ANTIGENRC
 
 # Enable autocorrection of commands and args
 setopt correct
@@ -44,16 +28,6 @@ alias updot="python ~/.updot/updot.py"
 # Prevent terminal from capturing Ctrl+S so Vim can assign it
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
-
-export ANDROID_HOME=/Users/nate/Library/Android/sdk
-
-export PATH=/usr/local/bin:"$PATH"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-[[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Set path to synced dotfiles for status check
 export LOCAL_DOTFILES_REPOSITORY="$HOME/.dotfiles"
