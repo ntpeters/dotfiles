@@ -5,6 +5,7 @@
 .bashrc
 .bash_profile
 .config/terminator/config
+.editorconfig
 .env
 .gitconfig
 .gitignore
