@@ -1,0 +1,17 @@
+<application>
+  <component name="UpdatesConfigurable">
+    <enabledExternalComponentSources>
+      <item value="Android SDK" />
+    </enabledExternalComponentSources>
+    <knownExternalComponentSources>
+      <item value="Android SDK" />
+    </knownExternalComponentSources>
+    <option name="externalUpdateChannels">
+      <map>
+        <entry key="Android SDK" value="Stable Channel" />
+      </map>
+    </option>
+    <option name="LAST_TIME_CHECKED" value="1502684026254" />
+    <option name="LAST_BUILD_CHECKED" value="IU-172.3544.35" />
+  </component>
+</application>

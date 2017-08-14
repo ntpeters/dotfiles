@@ -1,0 +1,45 @@
+<application>
+  <component name="PropertiesComponent">
+    <property name="evlsprt3.162" value="16" />
+    <property name="installed.kotlin.plugin.version" value="1.1.3-release-IJ2017.2-2" />
+    <property name="android-component-compatibility-check" value="1502683980206" />
+    <property name="evlsprt3.163" value="12" />
+    <property name="Default.savedEditorTheme" value="_@user_Default" />
+    <property name="project.wizard.group" value="JAVA_MODULE" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="toolwindow.stripes.buttons.info.shown" value="true" />
+    <property name="DeploymentNotificationsComponent.WarnDisplayed.Java7&amp;Windows7FTPIssue" value="false" />
+    <property name="lastTip" value="1" />
+    <property name="project.wizard.template" value="Java" />
+    <property name="ExpandBeforeRunStepsPanel" value="true" />
+    <property name="java.module.default.source.root" value="src" />
+    <property name="kotlin.lastUpdateCheck" value="1502684508891" />
+    <property name="IJ_BASE_PACKAGE" value="com.company" />
+    <property name="last.imported.location" value="$USER_HOME$/odrive/OneDrive/Projects/kotlin-koans" />
+    <property name="create.project.preferred.importer" value="Gradle" />
+    <property name="last.used.gradle.home" value="/usr/local/opt/gradle/libexec" />
+    <property name="JUnitSupport.hidePassedTests" value="false" />
+    <property name="selected.color.option.type" value="rainbow" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="ShowDocumentationInToolWindow" value="false" />
+    <property name="fileTypeChangedCounter" value="9" />
+    <property name="Copy.OpenInEditor" value="true" />
+    <property name="CommitChangeListDialog.DETAILS_SPLITTER_PROPORTION_2" value="0.7216339" />
+    <property name="com.intellij.diagnostic.IdeErrorsDialogactiveTab" value="-1" />
+    <property name="PLUGIN_FILTER" value="material&#10;mat&#10;mater&#10;gradle&#10;dash" />
+    <property name="com.chrisrm.idea.MaterialThemeUI.theme" value="DEFAULT" />
+    <property name="com.intellij.openapi.roots.ui.configuration.TabbedModuleEditor.selectedEditor" value="Dependencies" />
+    <property name="com.chrisrm.idea.MaterialThemeUIFork.theme" value="PALENIGHT" />
+    <property name="GradleModuleWizard.inheritGroupId" value="true" />
+    <property name="GradleModuleWizard.inheritVersion" value="true" />
+    <property name="evlsprt3.171" value="10" />
+    <property name="Darcula.savedEditorTheme" value="_@user_Material Theme - Palenight" />
+    <property name="file.gist.reindex.count" value="26" />
+    <property name="evlsprt3.172" value="11" />
+    <property name="MTTabsHeight" value="30" />
+    <property name="ts.lib.d.ts.version" value="2.4.1" />
+    <property name="MTBoldTabs" value="false" />
+    <property name="idea.background.frame" value="https://raw.githubusercontent.com/mallowigi/material-theme-jetbrains-eap/master/src/main/resources/themes/wall.jpg,60" />
+  </component>
+</application>

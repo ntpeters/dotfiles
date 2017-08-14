@@ -1,0 +1,10 @@
+<application>
+  <component name="ProjectManager">
+    <defaultProject>
+      <component name="PropertiesComponent">
+        <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+      </component>
+      <component name="XcodeMetaData" SHOW_WORKSPACE_NOTIFICATIONS="true" />
+    </defaultProject>
+  </component>
+</application>
