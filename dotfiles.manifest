@@ -4,6 +4,12 @@
 .antigenrc
 .bashrc
 .bash_profile
+.config/jetbrains/appcode/idea.properties
+.config/jetbrains/appcode/appcode.vmoptions
+.config/jetbrains/appcode/options
+.config/jetbrains/idea/idea.properties
+.config/jetbrains/idea/idea.vmoptions
+.config/jetbrains/idea/options
 .config/jetbrains/studio/idea.properties
 .config/jetbrains/studio/studio.vmoptions
 .config/jetbrains/studio/options
