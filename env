@@ -1,7 +1,13 @@
 # Common set of environment varialbes for all shells
 
+# Change properties location for Jetbrains products
+export IDEA_PROPERTIES='~/.config/jetbrains/idea/idea.properties'
+export STUDIO_PROPERTIES='~/.config/jetbrains/studio/idea.properties'
+export APPCODE_PROPERTIES='~/.config/jetbrains/appcode/idea.properties'
+
 # Ensure 256 color mode is enabled
 export TERM=xterm-256color
+
 
 # Editors
 export EDITOR='vim'

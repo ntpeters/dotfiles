@@ -1,0 +1,13 @@
+<application>
+  <component name="PropertiesComponent">
+    <property name="AndroidInitConfigurator.V4" value="true" />
+    <property name="AndroidInitConfigurator.V3" value="true" />
+    <property name="AndroidInitConfigurator.V1" value="true" />
+    <property name="AndroidInitConfigurator.V2" value="true" />
+    <property name="installation.uid" value="385a1abf-fc50-4643-a1af-66eade567e56" />
+    <property name="android-component-compatibility-check" value="1502520443458" />
+    <property name="newly.installed.api.level" value="25" />
+    <property name="PLUGIN_FILTER" value="materia" />
+    <property name="com.chrisrm.idea.MaterialThemeUI.theme" value="DEFAULT" />
+  </component>
+</application>

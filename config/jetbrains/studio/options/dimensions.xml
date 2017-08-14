@@ -1,0 +1,11 @@
+<application>
+  <component name="DimensionService">
+    <location key="SettingsEditor.0.0.1680.1050" x="221" y="22" />
+    <location key="WELCOME_SCREEN.0.0.1680.1050" x="739" y="230" />
+    <location key="#Browse_Repositories.0.0.1920.1080" x="548" y="112" />
+    <location key="#Plugins.0.0.1920.1080" x="560" y="115" />
+    <location key="WELCOME_SCREEN.0.0.1920.1080" x="960" y="230" />
+    <location key="#Updates.0.0.1920.1080" x="729" y="297" />
+    <location key="WELCOME_SCREEN.0.0.1280.800" x="640" y="356" />
+  </component>
+</application>
