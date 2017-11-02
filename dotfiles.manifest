@@ -4,6 +4,7 @@
 .antigenrc
 .bashrc
 .bash_profile
+.conemu/themes
 .config/jetbrains/appcode/idea.properties
 .config/jetbrains/appcode/appcode.vmoptions
 .config/jetbrains/appcode/options
@@ -18,7 +19,9 @@
 .env
 .gitconfig
 .gitignore
+.iterm2/themes
 .profile
+.vim/colors
 .vimrc
 .zlogin
 .zlogout

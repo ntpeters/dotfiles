@@ -9,11 +9,3 @@
   fi
 } &!
 
-# Print a random, hopefully interesting, adage.
-if (( $+commands[fortune] )); then
-  fortune -s -n 32
-  print
-fi
-
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
