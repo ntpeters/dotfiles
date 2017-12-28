@@ -14,6 +14,7 @@
 .config/jetbrains/studio/idea.properties
 .config/jetbrains/studio/studio.vmoptions
 .config/jetbrains/studio/options
+.config/nvim/init.vim
 .config/terminator/config
 .editorconfig
 .env
@@ -21,6 +22,7 @@
 .gitignore
 .iterm2/themes
 .profile
+.vim/autoload/ntpeters
 .vim/colors
 .vimrc
 .zlogin

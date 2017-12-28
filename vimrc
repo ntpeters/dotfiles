@@ -7,18 +7,28 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Determine if NCM should load
+let ncmSupported = has('nvim') || ntpeters#util#hasPythonModule('neovim')
+let ncmVimCompatAvailable = ncmSupported && !has('nvim')
+
 " Setup Plug
 call plug#begin('~/.vim/bundle')
 
 " Setup Plugins
-Plug 'Valloric/YouCompleteMe', { 'on': [] }
+" Enable NCM for NeoVim always, and Vim if requirements are met
+Plug 'roxma/nvim-completion-manager', ntpeters#util#plugEnableIf(ncmSupported)
+" Vim 8 compatibility for NCM (requires Python neovim module)
+Plug 'roxma/vim-hug-neovim-rpc', ntpeters#util#plugEnableIf(ncmVimCompatAvailable)
+Plug 'Shougo/neco-vim'
+Plug 'roxma/ncm-clang'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-scripts/a.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'scrooloose/syntastic', { 'on': [] }
+Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
@@ -28,12 +38,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'guns/xterm-color-table.vim'
-"Plug 'ntpeters/vim-indent-guides'
 Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle'}
 Plug 'ntpeters/vim-better-whitespace'
 "Plug 'svenfuchs/vim-todo'
 "Plug 'svenfuchs/vim-layout'
-Plug 'edthedev/vim-todo'
+"Plug 'edthedev/vim-todo'
 Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'kien/ctrlp.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -46,7 +55,7 @@ Plug 'ntpeters/vim-airline-colornum'
 Plug 'terryma/vim-multiple-cursors'
 
 " Setup Theme Plugins
-"Plug 'nanotech/jellybeans.vim'
+Plug 'nanotech/jellybeans.vim'
 "Plug 'vim-scripts/xoria256.vim'
 "Plug 'alem0lars/vim-colorscheme-darcula'
 "Plug 'ciaranm/inkpot'
@@ -78,22 +87,11 @@ set modelines=0
 " Don't use menus for gvim
 set guioptions=M
 
-"Delay syntatic load until we aren't doing anything
-augroup LazySyntatic
-  autocmd!
-  autocmd CursorHold * :call plug#load('syntastic')
-  autocmd CursorHold * :autocmd! LazySyntatic
-augroup END
-
 " Base16 themes require running a shell script...
 let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
 
 " Tell Airline to use Powerline fonts
 let g:airline_powerline_fonts = 1
-
-" Disable syntax checking for YouCompleteMe (using Syntastic instead)
-" This is needed for vim-gitgutter to work properly with YCM
-let g:ycm_enable_diagnostic_signs = 0
 
 " Tell gitgutter to always show sign column
 set signcolumn=yes
@@ -137,7 +135,6 @@ au VimEnter * CurrentLineWhitespaceOff soft
 " Enable CtrlP extensions
 let g:ctrlp_extensions = ['funky']
 
-
 set autoindent
 set smartindent
 " Tab width in spaces
@@ -164,16 +161,22 @@ set wildmenu
 set wildmode=list:longest
 set cursorline
 set cursorcolumn
-set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set number
 set autowrite
 
+" Set the Python version for Vim to use
+if !has('nvim')
+    set pyxversion=3
+endif
+
 " Enable mouse support for Visual and Normal modes
 set mouse=vn
-set ttymouse=xterm2
+if !has('nvim')
+    set ttymouse=xterm2
+endif
 set ttyfast
 
 " Enable persistent undo, and put undo files in their own directory to prevent
@@ -197,7 +200,7 @@ endif
 if isdirectory($HOME . '/.vim/backup') == 0
     :silent !mkdir -p ~/.vim/backup > /dev/null 2>&1
 endif
-" Remove current directory and home directory, then add .vim/undo as main dir
+" Remove current directory and home directory, then add .vim/backup as main dir
 " and current dir as backup dir
 set backupdir-=.
 set backupdir-=~/
@@ -206,7 +209,7 @@ set backupdir^=~/.vim/backup//
 if isdirectory($HOME . '/.vim/swap') == 0
     :silent !mkdir -p ~/.vim/swap > /dev/null 2>&1
 endif
-" Remove current directory and home directory, then add .vim/undo as main dir
+" Remove current directory and home directory, then add .vim/swap as main dir
 " and current dir as backup dir
 set directory-=.
 set directory-=~/
@@ -307,11 +310,11 @@ set splitbelow
 set splitright
 
 " Normalize split sizes when terminal is resized
-au VimResized * <C-w>=
+au VimResized * :execute "normal \<C-w>="
 
 " Shift+dir to jump paragraphs
-nnoremap <S-j> <S-{>
-nnoremap <S-k> <S-}>
+nnoremap <S-k> <S-{>
+nnoremap <S-j> <S-}>
 
 " More laziness remaps
 nnoremap :q :q!
@@ -339,15 +342,23 @@ set viewoptions+=unix    " Use Unix EOL
 au VimLeave ?* mkview!
 au VimEnter ?* silent loadview
 
-" Enable 256 color mode
-set t_Co=256
+" Set colorscheme options based on detected 256 color support
+if &t_Co == 256
+    " Use 24-bit color if available
+    if has('termguicolors')
+        " Required to set Vim-specific sequences for RGB colors
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+        set termguicolors
+    endif
 
-let base16colorspace=256
-" Set the color scheme
+    " Enable 256 colors in supported base16 themes
+    let base16colorspace=256
+endif
+
+" Set colorscheme
 "colorscheme jellybeans
 colorscheme base16-material-darker
-"colorscheme base16-material-palenight
-"colorscheme base16-material
 set background=dark
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
