@@ -1,24 +1,25 @@
 set nocompatible
 
 " Install Plug if needed
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+call ntpeters#util#ensurePlug()
+
+" If on Windows, link Vim directory to the standard location
+if has('win32') && empty(glob('~/vimfiles'))
+    :silent !cmd /c mklink /J "\%UserProfile\%/vimfiles" "\%UserProfile\%/.vim"
 endif
 
 " Determine if NCM should load
-let ncmSupported = has('nvim') || ntpeters#util#hasPythonModule('neovim')
-let ncmVimCompatAvailable = ncmSupported && !has('nvim')
+let g:ncmSupported = has('nvim') || ntpeters#util#hasPythonModule('neovim')
+let g:ncmVimCompatAvailable = g:ncmSupported && !has('nvim')
 
 " Setup Plug
 call plug#begin('~/.vim/bundle')
 
 " Setup Plugins
 " Enable NCM for NeoVim always, and Vim if requirements are met
-Plug 'roxma/nvim-completion-manager', ntpeters#util#plugEnableIf(ncmSupported)
+Plug 'roxma/nvim-completion-manager', ntpeters#util#plugEnableIf(g:ncmSupported)
 " Vim 8 compatibility for NCM (requires Python neovim module)
-Plug 'roxma/vim-hug-neovim-rpc', ntpeters#util#plugEnableIf(ncmVimCompatAvailable)
+Plug 'roxma/vim-hug-neovim-rpc', ntpeters#util#plugEnableIf(g:ncmVimCompatAvailable)
 Plug 'Shougo/neco-vim'
 Plug 'roxma/ncm-clang'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -87,8 +88,6 @@ set modelines=0
 " Don't use menus for gvim
 set guioptions=M
 
-" Base16 themes require running a shell script...
-let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
 
 " Tell Airline to use Powerline fonts
 let g:airline_powerline_fonts = 1
@@ -167,11 +166,6 @@ set laststatus=2
 set number
 set autowrite
 
-" Set the Python version for Vim to use
-if !has('nvim')
-    set pyxversion=3
-endif
-
 " Enable mouse support for Visual and Normal modes
 set mouse=vn
 if !has('nvim')
@@ -182,10 +176,7 @@ set ttyfast
 " Enable persistent undo, and put undo files in their own directory to prevent
 " pollution of project directories
 if exists("+undofile")
-    " create the directory if it doesn't exists
-    if isdirectory($HOME . '/.vim/undo') == 0
-        :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
-    endif
+    call ntpeters#util#ensureDirectory('~/.vim/undo')
     " Remove current directory and home directory, then add .vim/undo as main
     " dir and current dir as backup dir
     set undodir-=.
@@ -196,19 +187,15 @@ if exists("+undofile")
 endif
 
 " Move swap files and backup files to their own directory to prevent pollution
-" Create the directories if they do not exist
-if isdirectory($HOME . '/.vim/backup') == 0
-    :silent !mkdir -p ~/.vim/backup > /dev/null 2>&1
-endif
+call ntpeters#util#ensureDirectory('~/.vim/backup')
 " Remove current directory and home directory, then add .vim/backup as main dir
 " and current dir as backup dir
 set backupdir-=.
 set backupdir-=~/
 set backupdir+=.
 set backupdir^=~/.vim/backup//
-if isdirectory($HOME . '/.vim/swap') == 0
-    :silent !mkdir -p ~/.vim/swap > /dev/null 2>&1
-endif
+
+call ntpeters#util#ensureDirectory('~/.vim/swap')
 " Remove current directory and home directory, then add .vim/swap as main dir
 " and current dir as backup dir
 set directory-=.
@@ -217,9 +204,7 @@ set directory+=.
 set directory^=~/.vim/swap//
 
 " Set the directory for storing saved views
-if isdirectory($HOME . '/.vim/views') == 0
-    :silent !mkdir -p ~/.vim/views > /dev/null 2>&1
-endif
+call ntpeters#util#ensureDirectory('~/.vim/views')
 set viewdir=~/.vim/views
 
 " Remap leader from '\' to ','
@@ -232,7 +217,7 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
 
 " Set search key to /
 nnoremap / /\v
-"vnoremap / /\v
+vnoremap / /\v
 
 set ignorecase
 set smartcase
@@ -356,9 +341,16 @@ if &t_Co == 256
     let base16colorspace=256
 endif
 
-" Set colorscheme
-"colorscheme jellybeans
-colorscheme base16-material-darker
+" Base16 themes require running a shell script...
+let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
+" Base16 themes don't work well on Windows
+if !has('win32') && !empty(glob(g:base16_shell_path))
+    colorscheme base16-material-darker
+else
+    " Jellybeans works reasonably well everywhere, so it's a good fallback
+    colorscheme jellybeans
+endif
+
 set background=dark
 
 " Set columns as 80 and 120, and highlight anything beyond that in red
