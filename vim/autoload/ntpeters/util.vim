@@ -61,3 +61,17 @@ function! ntpeters#util#plugEnableIf(condition, ...)
     let opts = get(a:000, 0, {})
     return a:condition ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
+
+" Attempt setting a colorscheme and swallow errors if it doesn't exist
+function! ntpeters#util#tryColorscheme(name)
+    try
+        exe "colorscheme " . a:name
+    endtry
+endfunction
+
+" Toggles between tabs and spaces for the current buffer
+function! ntpeters#util#toggleTabs()
+    set expandtab!
+    retab!
+endfunction
+

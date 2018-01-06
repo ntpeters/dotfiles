@@ -1,12 +1,12 @@
 set nocompatible
 
-" Install Plug if needed
-call ntpeters#util#ensurePlug()
-
 " If on Windows, link Vim directory to the standard location
 if has('win32') && empty(glob('~/vimfiles'))
     :silent !cmd /c mklink /J "\%UserProfile\%/vimfiles" "\%UserProfile\%/.vim"
 endif
+
+" Install Plug if needed
+call ntpeters#util#ensurePlug()
 
 " Determine if NCM should load
 let g:ncmSupported = has('nvim') || ntpeters#util#hasPythonModule('neovim')
@@ -41,15 +41,10 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'guns/xterm-color-table.vim'
 Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle'}
 Plug 'ntpeters/vim-better-whitespace'
-"Plug 'svenfuchs/vim-todo'
-"Plug 'svenfuchs/vim-layout'
-"Plug 'edthedev/vim-todo'
+Plug 'gilsondev/searchtasks.vim'
 Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'kien/ctrlp.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
-"Plug 'tpope/vim-rails'
-"Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-endwise'
 Plug 'ervandew/supertab'
 Plug 'ntpeters/vim-airline-colornum'
@@ -57,12 +52,11 @@ Plug 'terryma/vim-multiple-cursors'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
-"Plug 'vim-scripts/xoria256.vim'
-"Plug 'alem0lars/vim-colorscheme-darcula'
-"Plug 'ciaranm/inkpot'
-"Plug 'morhetz/gruvbox'
-"Plug 'tomasr/molokai'
+Plug 'alem0lars/vim-colorscheme-darcula'
 call plug#end()
+
+" Remap leader from '\' to ','
+let mapleader = ","
 
 " Disable unused builtin plugins
 let g:loaded_gzip              = 1
@@ -82,18 +76,17 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
 
-"filetype plugin indent on
-set modelines=0
-
-" Don't use menus for gvim
-set guioptions=M
-
-
 " Tell Airline to use Powerline fonts
 let g:airline_powerline_fonts = 1
+" Enable tab/buffer line in Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
 
-" Tell gitgutter to always show sign column
-set signcolumn=yes
+" Tell vim-whitespace to strip whitespace on save
+let g:strip_whitespace_on_save = 1
+
+" Enable CtrlP extensions
+let g:ctrlp_extensions = ['funky']
 
 " Configure Rainbow Parenthese
 let g:rainbow_conf = {
@@ -120,19 +113,23 @@ let g:rainbow_conf = {
     \}
 
 " Enable Rainbow Parenthesis
-au VimEnter * RainbowToggle
+au VimEnter * if exists(":RainbowToggle") | exe ":RainbowToggle" | endif
 
 " Enable indent guides by default
-au VimEnter * IndentGuidesToggle
+au VimEnter * if exists(":IndentGuidesToggle") | exe ":IndentGuidesToggle" | endif
 
-" Tell vim-whitespace to strip whitespace on save
-au VimEnter * EnableStripWhitespaceOnSave
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Tell vim-whitespace to disable the current line highlightin
-au VimEnter * CurrentLineWhitespaceOff soft
+" Autosave on focus lost for gVim
+au FocusLost * :wa
 
-" Enable CtrlP extensions
-let g:ctrlp_extensions = ['funky']
+" Normalize split sizes when terminal is resized
+au VimResized * :execute "normal \<C-w>="
+
+" Save/load current vim state when exiting/opening a file
+au VimLeave ?* mkview!
+au VimEnter ?* silent loadview
 
 set autoindent
 set smartindent
@@ -165,6 +162,39 @@ set backspace=indent,eol,start
 set laststatus=2
 set number
 set autowrite
+" Shorten messages to avoid 'hit enter' prompts
+set shortmess=at
+
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+
+" Set auto text wrapping at column 80
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+
+" Show whitespace characters
+set list
+set listchars=tab:▸\ ,eol:¬
+
+" More sane split defaults
+set splitbelow
+set splitright
+
+set modelines=0
+
+" Don't use menus for gvim
+set guioptions=M
+
+" Tell gitgutter to always show sign column
+set signcolumn=yes
+
+" Set shortcut for paste mode
+set pastetoggle=<F10>
 
 " Enable mouse support for Visual and Normal modes
 set mouse=vn
@@ -175,7 +205,7 @@ set ttyfast
 
 " Enable persistent undo, and put undo files in their own directory to prevent
 " pollution of project directories
-if exists("+undofile")
+if has('persistent_undo')
     call ntpeters#util#ensureDirectory('~/.vim/undo')
     " Remove current directory and home directory, then add .vim/undo as main
     " dir and current dir as backup dir
@@ -194,6 +224,10 @@ set backupdir-=.
 set backupdir-=~/
 set backupdir+=.
 set backupdir^=~/.vim/backup//
+" Enable standard backups if not built with 'writebackup'
+if !has('writebackup')
+    set backup
+endif
 
 call ntpeters#util#ensureDirectory('~/.vim/swap')
 " Remove current directory and home directory, then add .vim/swap as main dir
@@ -202,13 +236,17 @@ set directory-=.
 set directory-=~/
 set directory+=.
 set directory^=~/.vim/swap//
+set swapfile
 
 " Set the directory for storing saved views
 call ntpeters#util#ensureDirectory('~/.vim/views')
 set viewdir=~/.vim/views
-
-" Remap leader from '\' to ','
-let mapleader = ","
+" Set options for 'mkview'
+set viewoptions=         " Ensure no other options are set
+set viewoptions+=cursor  " Cursor position in file
+set viewoptions+=folds   " All local fold options (ie. opened/closed/manual folds)
+set viewoptions+=slash   " Backslashes in filenames are replaced with foward slashes
+set viewoptions+=unix    " Use Unix EOL
 
 " Keys for CtrlP Funky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
@@ -219,33 +257,14 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
 nnoremap / /\v
 vnoremap / /\v
 
-set ignorecase
-set smartcase
-set gdefault
-set incsearch
-set showmatch
-set hlsearch
-
 " Unhighlight search terms with leader+space
 nnoremap <leader><space> :noh<cr>
 
 nnoremap <tab> %
 vnoremap <tab> %
-
-" Set auto text wrapping at column 80
-set wrap
-set textwidth=79
-set formatoptions=qrn1
-
-" Show whitespace characters
-set list
-set listchars=tab:▸\ ,eol:¬
-"set listchars=tab:-_
 "
 " Map Ctrl+N to open the NERDTree sidebar
 nmap <silent> <c-n> :NERDTreeToggle<cr>
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Set Ctrl+S to save the file in all modes
 nnoremap <silent> <c-s> :update<cr>
@@ -268,15 +287,6 @@ vnoremap <F1> <ESC>
 " Remap semicolon to colon, because shift is for nerds
 nnoremap ; :
 
-" Autosave on focus lost for gVim
-au FocusLost * :wa
-
-function! <SID>EscapePasteMode()
-    if invpaste?
-        set invpaste
-    endif
-endfunction
-
 " Set 'jj' to escape. Homerow OP
 imap jj <ESC>
 
@@ -290,13 +300,6 @@ nnoremap <C-l> <C-w>l
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <leader><S-w> <C-w>s<C-w>j
 
-" More sane split defaults
-set splitbelow
-set splitright
-
-" Normalize split sizes when terminal is resized
-au VimResized * :execute "normal \<C-w>="
-
 " Shift+dir to jump paragraphs
 nnoremap <S-k> <S-{>
 nnoremap <S-j> <S-}>
@@ -305,27 +308,8 @@ nnoremap <S-j> <S-}>
 nnoremap :q :q!
 nnoremap :X :x
 
-" Set shortcut for paste mode
-set pastetoggle=<F10>
-
-" Used to toggle between spaces and tabs
-function! <SID>ToggleTabs()
-    set expandtab!
-    retab!
-endfunction
 " Hit F9 to toggle spaces and tabs
-nmap <silent> <F9> :call <SID>ToggleTabs()<CR>
-
-" Set options for 'mkview'
-set viewoptions=         " Ensure no other options are set
-set viewoptions+=cursor  " Cursor position in file
-set viewoptions+=folds   " All local fold options (ie. opened/closed/manual folds)
-set viewoptions+=slash   " Backslashes in filenames are replaced with foward slashes
-set viewoptions+=unix    " Use Unix EOL
-
-" Save/load current vim state when exiting/opening a file
-au VimLeave ?* mkview!
-au VimEnter ?* silent loadview
+nmap <silent> <F9> :call ntpeters#util#toggleTabs()<CR>
 
 " Set colorscheme options based on detected 256 color support
 if &t_Co == 256
@@ -345,10 +329,10 @@ endif
 let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
 " Base16 themes don't work well on Windows
 if !has('win32') && !empty(glob(g:base16_shell_path))
-    colorscheme base16-material-darker
+    call ntpeters#util#tryColorscheme('base16-material-darker')
 else
     " Jellybeans works reasonably well everywhere, so it's a good fallback
-    colorscheme jellybeans
+    call ntpeters#util#tryColorscheme('jellybeans')
 endif
 
 set background=dark
