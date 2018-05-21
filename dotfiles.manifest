@@ -22,7 +22,7 @@
 .gitignore
 .iterm2/themes
 .profile
-.scripts
+.scripts/base16
 .vim/autoload/ntpeters
 .vim/colors
 .vimrc
