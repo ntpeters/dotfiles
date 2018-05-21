@@ -4,6 +4,7 @@
 antigen use prezto
 
 # Setup Antigen bundles
+antigen bundle chriskempson/base16-shell
 
 # Load Antigen bundles
 antigen apply

@@ -36,7 +36,7 @@ function! ntpeters#util#ensurePlug()
     let a:plugPath = '~/.vim/autoload/plug.vim'
     let a:plugUrl = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     if empty(glob(a:plugPath))
-        call ntpeters#util#downloadFile(a:plugUrl, a:plugPath)
+       call ntpeters#util#downloadFile(a:plugUrl, a:plugPath)
        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
 endfunction
@@ -75,3 +75,45 @@ function! ntpeters#util#toggleTabs()
     retab!
 endfunction
 
+function! ntpeters#util#isTempDir(path)
+    " Some platforms (Windows) use TMP
+    if len($TMP) && a:path == $TMP
+        return 1
+    endif
+
+    " Some platforms (Windows) use TEMP
+    if len($TEMP) && a:path == $TEMP
+        return 1
+    endif
+
+    " Linux/macOS use TMPDIR
+    if len($TMPDIR) && a:path == $TMPDIR
+        return 1
+    endif
+
+    " Some distros use XDG_RUNTIME_DIR, a per-user temp space
+    if len($XDG_RUNTIME_DIR ) && a:path == $XDG_RUNTIME_DIR
+        return 1
+    endif
+
+    return 0
+endfunction
+
+function! ntpeters#util#shouldRestoreView()
+    " Only save/load views for normal files
+    if !empty(&buftype)
+        return 0
+    endif
+
+    " Only save/load views for existing files
+    if !filereadable(expand('%:p'))
+        return 0
+    endif
+
+    " Don't save/load views for files in a temp dir
+    if ntpeters#util#isTempDir(expand('%:p:h'))
+        return 0
+    endif
+
+    return 1
+endfunction

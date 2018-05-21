@@ -23,15 +23,13 @@ Plug 'roxma/vim-hug-neovim-rpc', ntpeters#util#plugEnableIf(g:ncmVimCompatAvaila
 Plug 'Shougo/neco-vim'
 Plug 'roxma/ncm-clang'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
+Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'myusuf3/numbers.vim'
 Plug 'vim-scripts/a.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'w0rp/ale'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
 Plug 'airblade/vim-gitgutter'
 Plug 'mbbill/undotree'
@@ -39,7 +37,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'guns/xterm-color-table.vim'
-Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle'}
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -47,8 +45,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'tpope/vim-endwise'
 Plug 'ervandew/supertab'
-Plug 'ntpeters/vim-airline-colornum'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'itchyny/lightline.vim'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
@@ -75,12 +74,6 @@ let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
-
-" Tell Airline to use Powerline fonts
-let g:airline_powerline_fonts = 1
-" Enable tab/buffer line in Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
 
 " Tell vim-whitespace to strip whitespace on save
 let g:strip_whitespace_on_save = 1
@@ -113,23 +106,28 @@ let g:rainbow_conf = {
     \}
 
 " Enable Rainbow Parenthesis
-au VimEnter * if exists(":RainbowToggle") | exe ":RainbowToggle" | endif
+let g:rainbow_active = 1
 
-" Enable indent guides by default
-au VimEnter * if exists(":IndentGuidesToggle") | exe ":IndentGuidesToggle" | endif
+" Put all vimrc auto commands in their own group
+augroup vimrc
+    autocmd!
 
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    " Enable indent guides by default
+    autocmd VimEnter * if exists(":IndentGuidesToggle") | execute ":IndentGuidesToggle" | endif
 
-" Autosave on focus lost for gVim
-au FocusLost * :wa
+    autocmd VimEnter * if !argc() | NERDTree | endif
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Normalize split sizes when terminal is resized
-au VimResized * :execute "normal \<C-w>="
+    " Autosave on focus lost for gVim
+    autocmd FocusLost * :wall
 
-" Save/load current vim state when exiting/opening a file
-au VimLeave ?* mkview!
-au VimEnter ?* silent loadview
+    " Normalize split sizes when terminal is resized
+    autocmd VimResized * :execute "normal \<C-w>="
+
+    " Save/load current vim state when exiting/opening a file
+    autocmd BufWinLeave ?* if ntpeters#util#shouldRestoreView() | mkview! | endif
+    autocmd BufWinEnter ?* if ntpeters#util#shouldRestoreView() | silent! loadview | endif
+augroup END
 
 set autoindent
 set smartindent
@@ -251,7 +249,7 @@ set viewoptions+=unix    " Use Unix EOL
 " Keys for CtrlP Funky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>)
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 " Set search key to /
 nnoremap / /\v
@@ -325,10 +323,10 @@ if &t_Co == 256
     let base16colorspace=256
 endif
 
-" Base16 themes require running a shell script...
-let g:base16_shell_path='~/.go/bin/templates/shell/scripts'
 " Base16 themes don't work well on Windows
-if !has('win32') && !empty(glob(g:base16_shell_path))
+if !has('win32')
+    " Base16 themes require running a shell script...
+    let g:base16_shell_path='~/.scripts/base16'
     call ntpeters#util#tryColorscheme('base16-material-darker')
 else
     " Jellybeans works reasonably well everywhere, so it's a good fallback
@@ -340,13 +338,14 @@ set background=dark
 " Set columns as 80 and 120, and highlight anything beyond that in red
 let &colorcolumn="80,120,121"
 highlight ColorColumn ctermbg=19
-au BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+autocmd BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 
 " Set color for cursor line and column
 highlight CursorLine ctermbg=232
 highlight CursorColumn ctermbg=232
 
-" Load custom vim settings if they exist in the current directory
-if filereadable(".vim.custom")
-    so .vim.custom
+" Load local vim config if it exists
+let s:localRcPath = glob('~/.vimrc.local')
+if filereadable(s:localRcPath)
+    execute 'source ' . s:localRcPath
 endif
