@@ -129,6 +129,16 @@ augroup vimrc
     autocmd BufWinEnter ?* if ntpeters#util#shouldRestoreView() | silent! loadview | endif
 augroup END
 
+" TODO: Move to .gvimrc
+if has('gui_running')
+    set guifont=FuraCode_NF:h10
+    set guifont+=FuraCode:h10
+    if has('gui_win32')
+        set guifont+=Consolas:h10
+        set renderoptions=type:directx
+    endif
+endif
+
 set autoindent
 set smartindent
 " Tab width in spaces
@@ -323,10 +333,14 @@ if &t_Co == 256
     let base16colorspace=256
 endif
 
-" Base16 themes don't work well on Windows
-if !has('win32')
-    " Base16 themes require running a shell script...
+" Only allow Base16 themes to attempt running there shell script in
+" non-Windows, console Vim
+if !has('win32') && !has('gui_running')
     let g:base16_shell_path='~/.scripts/base16'
+endif
+
+" Base16 themes don't work well in Windows console
+if !has('win32') || has('gui_running')
     call ntpeters#util#tryColorscheme('base16-material-darker')
 else
     " Jellybeans works reasonably well everywhere, so it's a good fallback
