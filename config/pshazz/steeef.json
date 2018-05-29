@@ -1,0 +1,43 @@
+﻿{
+	"plugins": [ "git", "aliases", "dircolors", "resetcolor" ],
+	"prompt": [
+		[ "Magenta",  "", "$user" ],
+		[ "White",    "", " at "],
+		[ "Red",      "", "$hostname" ],
+		[ "White",    "", " in " ],
+		[ "Green",    "", "$path" ],
+		[ "White",    "", " $git_lbracket" ],
+		[ "DarkCyan", "", "$git_branch" ],
+		[ "Green",    "", "$git_staged" ],
+		[ "Red",      "", "$git_unstaged" ],
+		[ "Yellow",   "", "$git_stash" ],
+		[ "Cyan",     "", "$git_untracked" ],
+		[ "Magenta",  "", "$git_remote_state" ],
+		[ "White",    "", "$git_rbracket" ],
+		[ "White",    "", " `n$" ]
+	],
+	"git": {
+		"prompt_lbracket":    "(",
+		"prompt_rbracket":    ")",
+		"prompt_unstaged":    "●",
+		"prompt_staged":      "●",
+		"prompt_stash":       "●",
+		"prompt_untracked":   "●",
+		"prompt_remote_push": "●",
+		"prompt_remote_pull": "●",
+		"prompt_remote_same": " "
+	},
+	"dircolors": {
+		"dirs": [
+			[".*", "DarkBlue", ""]
+		],
+		"files": [
+		    ["(?ix).(7z|zip|tar|gz|rar)$",                        "darkcyan",   ""],
+		    ["(?ix).(exe|bat|cmd|py|pl|ps1|psm1|vbs|rb|reg)$",    "darkgreen",  ""],
+		    ["(?ix).(doc|docx|ppt|pptx|xls|xlsx|mdb|mdf|ldf)$",   "magenta",    ""],
+		    ["(?ix).(txt|cfg|conf|config|yml|ini|csv|log|json)$", "darkyellow", ""],
+		    ["(?ix).(sln|csproj|sqlproj|proj|targets)$",          "darkred",    ""],
+		    [".*",                                                "White",      ""]
+		]
+	}
+}

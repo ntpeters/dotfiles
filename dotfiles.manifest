@@ -15,6 +15,7 @@
 .config/jetbrains/studio/studio.vmoptions
 .config/jetbrains/studio/options
 .config/nvim/init.vim
+.config/pshazz
 .config/terminator/config
 .editorconfig
 .env
