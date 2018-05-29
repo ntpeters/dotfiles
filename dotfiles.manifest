@@ -5,6 +5,7 @@
 .bashrc
 .bash_profile
 .conemu/themes
+.config/concfg/settings.json
 .config/jetbrains/appcode/idea.properties
 .config/jetbrains/appcode/appcode.vmoptions
 .config/jetbrains/appcode/options
