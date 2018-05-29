@@ -16,6 +16,7 @@
 .config/jetbrains/studio/options
 .config/nvim/init.vim
 .config/pshazz
+.config/powershell/syntax-colors.ps1
 .config/terminator/config
 .editorconfig
 .env
