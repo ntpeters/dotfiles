@@ -9,3 +9,5 @@ Export-Variable 'Prompt' "${Env:UserName}`$Sat`$S${Env:ComputerName}`$Sin`$S`$P`
 Export-Variable 'ConEmuANSI' 'ON'
 
 Export-Variable 'PYTHONIOENCODING' 'utf-8'
+
+Export-Variable 'RIPGREP_CONFIG_PATH' "${Env:UserProfile}\.ripgreprc"

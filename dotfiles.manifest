@@ -25,6 +25,7 @@
 .gitignore
 .iterm2/themes
 .profile
+.ripgreprc
 .scripts/base16
 .vim/autoload/ntpeters
 .vim/colors

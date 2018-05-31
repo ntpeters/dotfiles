@@ -1,0 +1,8 @@
+# Limit output width
+--max-columns=150
+
+# Only respect case when not lowercase
+--smart-case
+
+# Force Unix-style paths everywhere (needed for path-extractor on Windows)
+--path-separator=/
