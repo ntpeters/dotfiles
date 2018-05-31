@@ -39,5 +39,9 @@ If ($(Get-Command pshazz -ErrorAction 'Ignore') -Ne $Null) {
 
 # Import concfg settings
 If ($(Get-Command concfg -ErrorAction 'Ignore') -Ne $Null) {
-    concfg import "${Env:UserProfile}\.config\concfg\settings.json"
+    concfg clean
+    concfg import --non-interactive "${Env:UserProfile}\.config\concfg\settings.json"
 }
+
+# Setup environment variables
+. "${Env:UserProfile}\.config\powershell\environment.ps1"
