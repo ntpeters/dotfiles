@@ -8,6 +8,8 @@
 	autocrlf = input
 	whitespace = trailing-space,space-before-tab
 	excludesfile = ~/.gitignore
+	quotePath = false
+	precomposeunicode = true
 [color]
 	ui = true
 [push]
@@ -23,6 +25,11 @@
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 	lc = log ORIG_HEAD.. --stat --no-merges
 	co = checkout
+	wtl = worktree list
+	wta = worktree add
+	sup = submodule update --init --recursive
+[include]
+	path = ~/.gitconfig.local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
