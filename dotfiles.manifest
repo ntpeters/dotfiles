@@ -25,6 +25,7 @@
 .gitignore
 .iterm2/themes
 .profile
+.pshazz
 .ripgreprc
 .scripts/base16
 .vim/autoload/ntpeters
