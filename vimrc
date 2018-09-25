@@ -46,7 +46,7 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'tpope/vim-endwise'
 Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags', ntpeters#util#plugEnableIf(executable('ctags'))
 Plug 'itchyny/lightline.vim'
 
 " Setup Theme Plugins

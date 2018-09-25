@@ -1,3 +1,5 @@
+#! /usr/bin/env sh
+
 # Common set of environment varialbes for all shells
 
 # Change properties location for Jetbrains products
@@ -7,7 +9,6 @@ export APPCODE_PROPERTIES='~/.config/jetbrains/appcode/idea.properties'
 
 # Ensure 256 color mode is enabled
 export TERM=xterm-256color
-
 
 # Editors
 export EDITOR='vim'
@@ -41,6 +42,14 @@ if [[ ! -d "$TMPDIR" ]]; then
   mkdir -p -m 700 "$TMPDIR"
 fi
 
+# Used by VcXsrv from WSL
+if [[ $(uname -r) = *"Microsoft"* ]]; then
+    export DISPLAY=:0
+    export LIBGL_ALWAYS_INDIRECT=1
+fi
+
 export PATH=/usr/local/bin:"$PATH"
 export PATH=$HOME/.go/bin:"$PATH"
 export PATH=$HOME/.multirust/toolchains/stable/cargo/bin:"$PATH"
+
+test -e "${HOME}/.env.local" && source "${HOME}/.env.local"
