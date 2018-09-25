@@ -16,6 +16,7 @@
 .config/jetbrains/studio/studio.vmoptions
 .config/jetbrains/studio/options
 .config/nvim/init.vim
+.config/nvim/ginit.vim
 .config/pshazz
 .config/powershell
 .config/terminator/config
@@ -23,6 +24,7 @@
 .env
 .gitconfig
 .gitignore
+.gvimrc
 .iterm2/themes
 .profile
 .pshazz

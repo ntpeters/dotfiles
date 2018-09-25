@@ -43,5 +43,18 @@ If ($(Get-Command concfg -ErrorAction 'Ignore') -Ne $Null) {
     concfg import --non-interactive "${Env:UserProfile}\.config\concfg\settings.json"
 }
 
+# Link NeoVim config into place
+$Script:NeoVimConfigDir= "${Env:UserProfile}\AppData\Local\nvim"
+$Script:NeoVimConfig = "${$Script:NeoVimConfigDir}\init.vim"
+If (-Not (Test-Path $Script:NeoVimConfig)) {
+    New-Item -Path $Script:NeoVimConfig -ItemType 'SymbolicLink' -Value "${Env:UserProfile}\.config\nvim\init.vim"
+}
+
+# Link NeoVim GUI config into place
+$Script:NeoVimGuiConfig = "${$Script:NeoVimConfigDir}\ginit.vim"
+If (-Not (Test-Path $Script:NeoVimGuiConfig)) {
+    New-Item -Path $Script:NeoVimGuiConfig -ItemType 'SymbolicLink' -Value "${Env:UserProfile}\.config\nvim\ginit.vim"
+}
+
 # Setup environment variables
 . "${Env:UserProfile}\.config\powershell\environment.ps1"
