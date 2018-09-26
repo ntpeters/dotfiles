@@ -20,6 +20,7 @@
 .config/pshazz
 .config/powershell
 .config/terminator/config
+.config/xlaunch/config.xlaunch
 .editorconfig
 .env
 .gitconfig
