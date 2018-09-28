@@ -17,7 +17,12 @@ If ((-Not $pshazz) -And ($(Get-Command pshazz -ErrorAction 'Ignore') -Ne $Null))
 Invoke-Expression "$(thefuck --alias)"
 Set-Alias fu fuck
 Set-Alias pe path-extractor
-Set-Alias xlaunch xlaunch -run "${Env:UserProfile}\.config\xlaunch\config.xlaunch"
+
+function Invoke-LaunchX {
+    xlaunch -run "${Env:UserProfile}\.config\xlaunch\config.xlaunch"
+}
+
+Set-Alias startx Invoke-LaunchX
 
 # Import custom functions
 $Util = "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
