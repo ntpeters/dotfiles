@@ -16,10 +16,12 @@ let g:ncmVimCompatAvailable = g:ncmSupported && !has('nvim')
 call plug#begin('~/.vim/bundle')
 
 " Setup Plugins
-" Enable NCM for NeoVim always, and Vim if requirements are met
-Plug 'roxma/nvim-completion-manager', ntpeters#util#plugEnableIf(g:ncmSupported)
 " Vim 8 compatibility for NCM (requires Python neovim module)
 Plug 'roxma/vim-hug-neovim-rpc', ntpeters#util#plugEnableIf(g:ncmVimCompatAvailable)
+" Required by ncm2
+Plug 'roxma/nvim-yarp', ntpeters#util#plugEnableIf(g:ncmSupported)
+" Enable NCM for NeoVim always, and Vim if requirements are met
+Plug 'ncm2/ncm2', ntpeters#util#plugEnableIf(g:ncmSupported)
 Plug 'Shougo/neco-vim'
 Plug 'roxma/ncm-clang'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -48,6 +50,7 @@ Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ludovicchabant/vim-gutentags', ntpeters#util#plugEnableIf(executable('ctags'))
 Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-startify'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
@@ -115,7 +118,7 @@ augroup vimrc
     " Enable indent guides by default
     autocmd VimEnter * if exists(":IndentGuidesToggle") | execute ":IndentGuidesToggle" | endif
 
-    autocmd VimEnter * if !argc() | NERDTree | endif
+    autocmd VimEnter * if (!argc() && exists(":NERDTree")) | execute ":NERDTree" | endif
     autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
     " Autosave on focus lost for gVim
@@ -128,16 +131,6 @@ augroup vimrc
     autocmd BufWinLeave ?* if ntpeters#util#shouldRestoreView() | mkview! | endif
     autocmd BufWinEnter ?* if ntpeters#util#shouldRestoreView() | silent! loadview | endif
 augroup END
-
-" TODO: Move to .gvimrc
-if has('gui_running')
-    set guifont=FuraCode_NF:h10
-    set guifont+=FuraCode:h10
-    if has('gui_win32')
-        set guifont+=Consolas:h10
-        set renderoptions=type:directx
-    endif
-endif
 
 set autoindent
 set smartindent
@@ -194,9 +187,6 @@ set splitbelow
 set splitright
 
 set modelines=0
-
-" Don't use menus for gvim
-set guioptions=M
 
 " Tell gitgutter to always show sign column
 set signcolumn=yes
@@ -333,14 +323,14 @@ if &t_Co == 256
     let base16colorspace=256
 endif
 
-" Only allow Base16 themes to attempt running there shell script in
+" Only allow Base16 themes to attempt running thier shell script in
 " non-Windows, console Vim
-if !has('win32') && !has('gui_running')
+if !has('win32')
     let g:base16_shell_path='~/.scripts/base16'
 endif
 
 " Base16 themes don't work well in Windows console
-if !has('win32') || has('gui_running')
+if !has('win32')
     call ntpeters#util#tryColorscheme('base16-material-darker')
 else
     " Jellybeans works reasonably well everywhere, so it's a good fallback
