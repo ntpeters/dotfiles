@@ -118,8 +118,11 @@ augroup vimrc
     " Enable indent guides by default
     autocmd VimEnter * if exists(":IndentGuidesToggle") | execute ":IndentGuidesToggle" | endif
 
-    autocmd VimEnter * if (!argc() && exists(":NERDTree")) | execute ":NERDTree" | endif
-    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+    " Open NERDTree if Vim was invoked with no args or a directory was opened
+    autocmd VimEnter * if ((!argc() || (expand('%:p') == expand('%:p:h'))) && exists(":NERDTree")) | execute ":NERDTreeToggle" | endif
+
+    " Close NERDTree if it's the last open buffer
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | :quit | endif
 
     " Autosave on focus lost for gVim
     autocmd FocusLost * :wall
