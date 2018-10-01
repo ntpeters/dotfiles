@@ -304,6 +304,9 @@ nnoremap <leader><S-w> <C-w>s<C-w>j
 " Shift+dir to jump paragraphs
 nnoremap <S-k> <S-{>
 nnoremap <S-j> <S-}>
+" Shift+dir to jump to begin/end of line
+nnoremap <S-h> ^
+nnoremap <S-l> $
 
 " More laziness remaps
 nnoremap :q :q!
