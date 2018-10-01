@@ -29,6 +29,3 @@ augroup gvimrc
     " Autosave on focus lost for gVim
     autocmd FocusLost * if filereadable(expand('%:p')) | :wall | endif
 augroup END
-
-" Don't use menus for gvim
-set guioptions=M

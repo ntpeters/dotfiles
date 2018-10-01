@@ -208,6 +208,10 @@ if !has('nvim')
 endif
 set ttyfast
 
+" Must be set before GUI is loaded, don't move to gvimrc
+" Disable menus, copy visual selection to clipboard, and preserve window sizing
+set guioptions=Mak
+
 " Enable persistent undo, and put undo files in their own directory to prevent
 " pollution of project directories
 if has('persistent_undo')
