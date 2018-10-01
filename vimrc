@@ -130,6 +130,9 @@ augroup vimrc
     " Save/load current vim state when exiting/opening a file
     autocmd BufWinLeave ?* if ntpeters#util#shouldRestoreView() | mkview! | endif
     autocmd BufWinEnter ?* if ntpeters#util#shouldRestoreView() | silent! loadview | endif
+
+    " Highlight anything beyond column 120 in red
+    autocmd BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 augroup END
 
 set autoindent
@@ -339,10 +342,9 @@ endif
 
 set background=dark
 
-" Set columns as 80 and 120, and highlight anything beyond that in red
+" Set columns as 80 and 120
 let &colorcolumn="80,120,121"
 highlight ColorColumn ctermbg=19
-autocmd BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 
 " Set color for cursor line and column
 highlight CursorLine ctermbg=232
