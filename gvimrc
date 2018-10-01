@@ -22,8 +22,13 @@ if has('win32') && !has('nvim')
     set renderoptions=type:directx
 endif
 
-" Autosave on focus lost for gVim
-autocmd FocusLost * if filereadable(expand('%:p')) | :wall | endif
+" Put all gvimrc commands in their own group
+augroup gvimrc
+    autocmd!
+
+    " Autosave on focus lost for gVim
+    autocmd FocusLost * if filereadable(expand('%:p')) | :wall | endif
+augroup END
 
 " Don't use menus for gvim
 set guioptions=M
