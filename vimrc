@@ -50,7 +50,8 @@ Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ludovicchabant/vim-gutentags', ntpeters#util#plugEnableIf(executable('ctags'))
 Plug 'itchyny/lightline.vim'
-Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
