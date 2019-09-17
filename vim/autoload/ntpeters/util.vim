@@ -11,47 +11,47 @@ endfunction
 
 " Creates the given directory if it doesn't exist
 function! ntpeters#util#ensureDirectory(path)
-    let a:expandedPath = expand(a:path)
-    let a:devNull = ntpeters#util#devNullPath()
-    if empty(glob(a:expandedPath))
-        :silent execute '!mkdir -p ' . a:expandedPath . ' > ' . a:devNull . ' 2>&1'
+    let l:expandedPath = expand(a:path)
+    let l:devNull = ntpeters#util#devNullPath()
+    if empty(glob(l:expandedPath))
+        :silent execute '!mkdir -p ' . l:expandedPath . ' > ' . l:devNull . ' 2>&1'
     endif
 endfunction
 
 " Downloads a file at the given URI to the specified path
 function! ntpeters#util#downloadFile(uri, path)
-    let a:expandedPath = expand(a:path)
+    let l:expandedPath = expand(a:path)
 
     if has('win32')
-        let a:targetDirectory = fnamemodify(a:expandedPath, ":h")
-        call ntpeters#util#ensureDirectory(a:targetDirectory)
-        :silent execute '!powershell -Command Invoke-WebRequest -Uri ' . a:uri . ' -OutFile ' . a:expandedPath
+        let l:targetDirectory = fnamemodify(l:expandedPath, ":h")
+        call ntpeters#util#ensureDirectory(l:targetDirectory)
+        :silent execute '!powershell -Command Invoke-WebRequest -Uri ' . a:uri . ' -OutFile ' . l:expandedPath
     else
-        :silent execute '!curl -fLo ' . a:expandedPath . ' --create-dirs ' . a:uri
+        :silent execute '!curl -fLo ' . l:expandedPath . ' --create-dirs ' . a:uri
     endif
 endfunction
 
 " Downloads Plug if not installed, and installs all plugins
 function! ntpeters#util#ensurePlug()
-    let a:plugPath = '~/.vim/autoload/plug.vim'
-    let a:plugUrl = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    if empty(glob(a:plugPath))
-       call ntpeters#util#downloadFile(a:plugUrl, a:plugPath)
+    let l:plugPath = '~/.vim/autoload/plug.vim'
+    let l:plugUrl = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    if empty(glob(l:plugPath))
+       call ntpeters#util#downloadFile(l:plugUrl, l:plugPath)
        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
 endfunction
 
 " Checks whether a given Python module is installed
 function! ntpeters#util#hasPythonModule(name)
-    let a:hasModule = 0
+    let l:hasModule = 0
     if has('pythonx')
 pythonx << moduleCheck
 import vim, pkgutil
 if pkgutil.find_loader(vim.eval("a:name")):
-    vim.command("let a:hasModule = 1")
+    vim.command("let l:hasModule = 1")
 moduleCheck
     endif
-    return a:hasModule
+    return l:hasModule
 endfunction
 
 " Use with Plug to conditionally load plugins
