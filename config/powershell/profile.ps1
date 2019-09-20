@@ -13,6 +13,9 @@ If ((-Not $pshazz) -And ($(Get-Command pshazz -ErrorAction 'Ignore') -Ne $Null))
 # Set syntax colors
 . "${Env:UserProfile}\.config\powershell\syntax-colors.ps1"
 
+# Load environment variables
+. "${Env:UserProfile}\.config\powershell\environment.ps1"
+
 # Aliases
 Invoke-Expression "$(thefuck --alias)"
 Set-Alias fu fuck

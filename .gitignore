@@ -1,2 +1,6 @@
 # Override rule in global gitignore
 !profile
+
+# Ignore local versions of dotfiles
+local_*
+*.local
