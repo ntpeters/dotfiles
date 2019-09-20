@@ -2,5 +2,5 @@
 !profile
 
 # Ignore local versions of dotfiles
-local_*
+**/local_*
 *.local
