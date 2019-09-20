@@ -55,7 +55,7 @@ If (($Script:IsWindows -Eq $True) -And (Test-Path $OpenSshUtils)) {
 }
 
 # Source local PowerShell profile if one exists
-$LocalPowerShellProfile = "${Env:UserProfile}\Documents\WindowsPowerShell\local_profile.ps1"
+$LocalPowerShellProfile = "${Env:UserProfile}\.config\powershell\local_profile.ps1"
 If (Test-Path $LocalPowerShellProfile) {
     . $LocalPowerShellProfile
 }
