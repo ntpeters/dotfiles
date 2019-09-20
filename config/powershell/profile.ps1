@@ -3,6 +3,7 @@
 # Set encoding
 $OutputEncoding = [Text.Encoding]::UTF8
 [Console]::OutputEncoding = $OutputEncoding
+$PSDefaultParameterValues["Out-File:Encoding"] = "UTF8"
 CHCP 65001 | Out-Null
 
 # Init pshazz if available and not already initialized
