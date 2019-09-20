@@ -44,6 +44,16 @@ If (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
+# Import utilities for OpenSSH on Windows.
+# We're running on Windows if either:
+#   - $IsWindows is true (PowerShell Core)
+#   - $IsWindows does not exist (Windows PowerShell)
+$Script:IsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
+$OpenSshUtils = "${Env:UserProfile}\.config\powershell\openssh\OpenSSHUtils.psm1"
+If (($Script:IsWindows -Eq $True) -And (Test-Path $OpenSshUtils)) {
+    Import-Module "$OpenSshUtils"
+}
+
 # Source local PowerShell profile if one exists
 $LocalPowerShellProfile = "${Env:UserProfile}\Documents\WindowsPowerShell\local_profile.ps1"
 If (Test-Path $LocalPowerShellProfile) {
