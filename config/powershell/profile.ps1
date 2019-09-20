@@ -22,6 +22,16 @@ Invoke-Expression "$(thefuck --alias)"
 Set-Alias fu fuck
 Set-Alias pe path-extractor
 
+# PSReadLine Settings
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadlineKeyHandler "Ctrl+Delete" KillWord
+Set-PSReadlineKeyHandler "Ctrl+Backspace" BackwardKillWord
+Set-PSReadlineKeyHandler "Ctrl+LeftArrow" BackwardWord
+Set-PSReadlineKeyHandler "Ctrl+RightArrow" NextWord
+Set-PSReadlineKeyHandler "Tab" MenuComplete
+
 # Import custom functions
 $Util = "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 If (Test-Path($Util)) {
