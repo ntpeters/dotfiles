@@ -7,7 +7,7 @@ $PSDefaultParameterValues["Out-File:Encoding"] = "UTF8"
 CHCP 65001 | Out-Null
 
 # Init pshazz if available and not already initialized
-If ((-Not $pshazz) -And ($(Get-Command pshazz -ErrorAction 'Ignore') -Ne $Null)) {
+If ((-Not $pshazz) -And ($Null -Ne $(Get-Command pshazz -ErrorAction 'Ignore'))) {
     pshazz init
 }
 
