@@ -22,12 +22,6 @@ Invoke-Expression "$(thefuck --alias)"
 Set-Alias fu fuck
 Set-Alias pe path-extractor
 
-function Invoke-LaunchX {
-    xlaunch -run "${Env:UserProfile}\.config\xlaunch\config.xlaunch"
-}
-
-Set-Alias startx Invoke-LaunchX
-
 # Import custom functions
 $Util = "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 If (Test-Path($Util)) {
