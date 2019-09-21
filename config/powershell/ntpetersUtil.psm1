@@ -12,8 +12,8 @@ Export-ModuleMember -Alias export, exa, colors -Function 'Export-Variable', 'Inv
 # We're running on Windows if either:
 #   - $IsWindows is true (PowerShell Core)
 #   - $IsWindows does not exist (Windows PowerShell)
-$Script:IsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
-If ($Script:IsWindows -Eq $True) {
+$Script:IsOsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
+If ($Script:IsOsWindows -Eq $True) {
     . $scriptDirectory\functions\Invoke-XLaunch.ps1
     . $scriptDirectory\functions\Test-Administrator.ps1
 

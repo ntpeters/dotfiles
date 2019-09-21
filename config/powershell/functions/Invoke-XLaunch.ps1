@@ -2,8 +2,8 @@
 # We're running on Windows if either:
 #   - $IsWindows is true (PowerShell Core)
 #   - $IsWindows does not exist (Windows PowerShell)
-$Script:IsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
-If ($Script:IsWindows -Eq $False) {
+$Script:IsOsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
+If ($Script:IsOsWindows -Eq $False) {
     Throw 'The Invoke-XLaunch function is intended for Windows only.'
 }
 
