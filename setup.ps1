@@ -17,7 +17,15 @@ If (-Not (Test-Path $Script:WindowsPowerShellHome)) {
 # Use the same directory for Windows PowerShell and PowerShell Core
 $Script:PowerShellCoreHome = "${Env:UserProfile}\Documents\PowerShell"
 If (-Not (Test-Path $Script:PowerShellCoreHome)) {
-    New-Item -Path $Script:PowerShellCoreHome -ItemType Junction -Value "${Env:UserProfile}\Documents\WindowsPowerShell"
+    New-Item -Path $Script:PowerShellCoreHome -ItemType Junction -Value "${Env:UserProfile}\Documents\PowerShell"
+}
+
+# If the user's documents directory is not at '~/Documents', link the PowerShell directories into place there too.
+# This will be the case if 'Documents' is being backed up to OneDrive.
+$Script:MyDocumentsPath = [Environment]::GetFolderPath("MyDocuments")
+If ($Script:MyDocumentsPath -Ne "${Env:UserProfile"}\Documents") {
+    New-Item -Path $Script:WindowsPowerShellHome -ItemType Junction -Value "${Script:MyDocumentsPath}\WindowsPowerShell"
+    New-Item -Path $Script:PowerShellCoreHome -ItemType Junction -Value "${Script:MyDocumentsPath}\PowerShell"
 }
 
 # Link PowerShell profile into place
