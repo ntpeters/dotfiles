@@ -12,7 +12,12 @@ $Script:ScriptDirectory = (Split-Path -Parent $MyInvocation.MyCommand.Definition
 Export-ModuleMember -Alias export, exa, colors -Function 'Export-Variable', 'Invoke-Exa', 'Show-Colors'
 
 # Load Windows only functions.
-If ($Global:IsWindows) {
+# We're running on Windows if either:
+#   - $IsWindows is true (PowerShell Core)
+#   - $IsWindows does not exist (Windows PowerShell)
+# Intentionally replicating the Windows check logic from `environment.ps1` here to avoid circular dependencies.
+$Script:IsOsWindows = Get-Variable 'IsWindows' -Scope 'Global' -ErrorAction 'Ignore'
+If ($Script:IsOsWindows -Ne $False) {
     . $Script:ScriptDirectory\functions\Invoke-XLaunch.ps1
     . $Script:ScriptDirectory\functions\Test-Administrator.ps1
     . $Script:ScriptDirectory\functions\New-Link.ps1
