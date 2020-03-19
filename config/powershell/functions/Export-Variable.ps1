@@ -24,11 +24,21 @@ Function Export-Variable {
         }
     }
 
+    # Only set the variable if the current value differs for the current user or process.
+    # These checks are needed due to `SetEnvironmentVariable` automatically broadcasting a `WM_SETTINGCHANGE` message
+    # and waiting for all top-level windows to respond.
+
     # Set the environment variable for the current user.
-    [Environment]::SetEnvironmentVariable($Name, $Value, [System.EnvironmentVariableTarget]::User)
+    $CurrentUserValue = [Environment]::GetEnvironmentVariable($Name, [System.EnvironmentVariableTarget]::User)
+    If ($CurrentUserValue -Ne $Value) {
+        [Environment]::SetEnvironmentVariable($Name, $Value, [System.EnvironmentVariableTarget]::User)
+    }
 
     # Also make the variable available immediately in the current session.
-    Invoke-Expression "`$Env:${Name}='${Value}'"
+    $CurrentProcessValue = [Environment]::GetEnvironmentVariable($Name, [System.EnvironmentVariableTarget]::Process)
+    If ($CurrentProcessValue -Ne $Value) {
+        [Environment]::SetEnvironmentVariable($Name, $Value, [System.EnvironmentVariableTarget]::Process)
+    }
 }
 
 Set-Alias export Export-Variable
