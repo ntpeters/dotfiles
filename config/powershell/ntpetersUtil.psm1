@@ -15,6 +15,7 @@ Export-ModuleMember -Alias export, exa, colors -Function 'Export-Variable', 'Inv
 If ($Global:IsWindows) {
     . $Script:ScriptDirectory\functions\Invoke-XLaunch.ps1
     . $Script:ScriptDirectory\functions\Test-Administrator.ps1
+    . $Script:ScriptDirectory\functions\New-Link.ps1
 
-    Export-ModuleMember -Alias startx, isadmin -Function 'Invoke-XLaunch', 'Test-Administrator'
+    Export-ModuleMember -Alias startx, isadmin, ln -Function 'Invoke-XLaunch', 'Test-Administrator', 'New-Link'
 }
