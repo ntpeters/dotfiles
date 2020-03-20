@@ -53,3 +53,12 @@ New-Link -TargetPath "${Env:UserProfile}\.config\nvim\init.vim" -LinkPath $Scrip
 # Link NeoVim GUI config into place
 $Script:NeoVimGuiConfig = "${Script:NeoVimConfigDir}\ginit.vim"
 New-Link -TargetPath "${Env:UserProfile}\.config\nvim\ginit.vim" -LinkPath $Script:NeoVimGuiConfig -LinkType 'SymbolicLink'
+
+# Kill other PowerShell instances before installing modules to ensure they aren't in use
+Stop-PowerShell -Type 'Current'
+
+# Required for PSReadLine
+Install-UnloadedModule -Name PowerShellGet
+
+# Use latest version instead of the one shipped in-box
+Install-UnloadedModule -Name PSReadLine
