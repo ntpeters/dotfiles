@@ -8,8 +8,9 @@ $Script:ScriptDirectory = (Split-Path -Parent $MyInvocation.MyCommand.Definition
 . $Script:ScriptDirectory\functions\Export-Variable.ps1
 . $Script:ScriptDirectory\functions\Invoke-Exa.ps1
 . $Script:ScriptDirectory\functions\Show-Colors.ps1
+. $Script:ScriptDirectory\functions\Install-UnloadedModule.ps1
 
-Export-ModuleMember -Alias export, exa, colors -Function 'Export-Variable', 'Invoke-Exa', 'Show-Colors'
+Export-ModuleMember -Alias export, exa, colors, inumo -Function 'Export-Variable', 'Invoke-Exa', 'Show-Colors', 'Install-UnloadedModule'
 
 # Load Windows only functions.
 # We're running on Windows if either:
