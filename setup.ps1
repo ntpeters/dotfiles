@@ -54,6 +54,10 @@ New-Link -TargetPath "${Env:UserProfile}\.config\nvim\init.vim" -LinkPath $Scrip
 $Script:NeoVimGuiConfig = "${Script:NeoVimConfigDir}\ginit.vim"
 New-Link -TargetPath "${Env:UserProfile}\.config\nvim\ginit.vim" -LinkPath $Script:NeoVimGuiConfig -LinkType 'SymbolicLink'
 
+# Link VS Code config into place
+$Script:VisualStudioCodeConfig = "${Env:AppData}\Code\User\settings.json"
+New-Link -TargetPath "${Env:UserProfile}\.config\Code\User\settings.json" -LinkPath $Script:VisualStudioCodeConfig -LinkType 'SymbolicLink'
+
 # Kill other PowerShell instances before installing modules to ensure they aren't in use
 Stop-PowerShell -Type 'Current'
 

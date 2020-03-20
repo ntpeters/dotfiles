@@ -1,0 +1,65 @@
+{
+    "team.showWelcomeMessage": false,
+
+    "editor.fontFamily": "FuraCode NF",
+    "editor.fontLigatures": true,
+    "editor.renderWhitespace": "all",
+    "editor.lineHeight": 22,
+
+    // "explorer.decorations.badges": false,
+
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
+        "suppressUpdateNotice": true,
+        "suppressWelcomeNotice": true
+    },
+    "gitlens.keymap": "alternate",
+    "gitlens.historyExplorer.enabled": true,
+
+    "python.disablePromptForFeatures": [
+        "pylint"
+    ],
+
+    "window.zoomLevel": 0,
+    "window.titleBarStyle": "custom",
+    "clang.diagnostic.enable": true,
+
+    "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
+    "workbench.colorCustomizations": {
+        "settings.modifiedItemForeground": "#2979FF"
+    },
+
+    "materialTheme.fixIconsRunning": false,
+    "materialTheme.accentPrevious": "Indigo",
+    "materialTheme.autoApplyIcons": true,
+
+    "breadcrumbs.enabled": true,
+
+    "cmake-tools-helper.cmake_download_path": "C:\\Users\\nathpete\\.vscode\\extensions\\maddouri.cmake-tools-helper-0.2.1\\cmake_download",
+
+    "cmake.configureOnOpen": true,
+    "cmake.configureArgs": [
+        "-G\"Ninja\"",
+        "-H.",
+        "-B_build/onecore/x86/debug",
+        "-DPLATFORM=onecore",
+        "-DCDP_BUILD_ARCH=x86"
+    ],
+    "explorer.confirmDragAndDrop": false,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "C_Cpp.updateChannel": "Insiders",
+    "C_Cpp.default.cppStandard": "c++14",
+    "C_Cpp.default.cStandard": "c11",
+    "editor.smoothScrolling": true,
+    "editor.suggestSelection": "first",
+    "[markdown]": {}
+}
