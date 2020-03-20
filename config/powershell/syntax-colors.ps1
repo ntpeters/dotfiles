@@ -13,7 +13,7 @@ If ((Get-Module PSReadline).Version.Major -Ge 2) {
         "Parameter" = [ConsoleColor]::Red
         "Keyword" = [ConsoleColor]::Yellow
         "Command" = "$([char]0x1b)[97;44m"  # Foreground: White, Background: Blue
-        "None" = [ConsoleColor]::White
+        "Default" = [ConsoleColor]::White
         }
 } Else {
     # Use old style color options for PSReadline versions before 2.0
