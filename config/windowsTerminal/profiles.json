@@ -1,0 +1,153 @@
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "globals" : 
+    {
+        "alwaysShowTabs" : true,
+        "defaultProfile" : "{2a2cd486-291a-4a2d-9a4b-308ff81acc58}",
+        "initialCols" : 120,
+        "initialRows" : 30,
+        "keybindings" : [],
+        "requestedTheme" : "system",
+        "showTabsInTitlebar" : true,
+        "showTerminalTitleInTitlebar" : true,
+        "wordDelimiters" : " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502"
+    },
+    "profiles" : 
+    [
+        {
+            "acrylicOpacity" : 0.75,
+            "closeOnExit" : false,
+            "colorScheme" : "Material Darker",
+            "commandline" : "cmd.exe",
+            "cursorColor" : "#FFFFFF",
+            "cursorShape" : "bar",
+            "fontFace" : "Consolas",
+            "fontSize" : 12,
+            "guid" : "{489e8db9-1b2c-4161-93d6-57fac406f1e2}",
+            "historySize" : 9001,
+            "name" : "cmd",
+            "padding" : "0, 0, 0, 0",
+            "snapOnInput" : true,
+            "useAcrylic" : true,
+            "startingDirectory": "%USERPROFILE%"
+        },
+        {
+            "acrylicOpacity" : 0.5,
+            "closeOnExit" : false,
+            "colorScheme" : "Material Darker",
+            "commandline" : "powershell.exe",
+            "cursorColor" : "#FFFFFF",
+            "cursorShape" : "bar",
+            "fontFace" : "FuraCode NF",
+            "fontSize" : 11,
+            "guid" : "{2a2cd486-291a-4a2d-9a4b-308ff81acc58}",
+            "historySize" : 9001,
+            "name" : "PowerShell",
+            "padding" : "0, 0, 0, 0",
+            "snapOnInput" : true,
+            "useAcrylic" : false,
+            "startingDirectory": "%USERPROFILE%"
+        },
+        {
+            "colorScheme" : "Material Darker",
+            "commandline" : "pwsh.exe",
+            "guid" : "{c4cd4240-7484-46a2-a52d-41c5603fb615}",
+            "name" : "PowerShell Core",
+            "startingDirectory": "%USERPROFILE%"
+        },
+        {
+            "acrylicOpacity" : 0.75,
+            "closeOnExit" : false,
+            "colorScheme" : "Material Darker",
+            "commandline" : "wsl.exe --distribution Ubuntu-16.04",
+            "cursorColor" : "#FFFFFF",
+            "cursorShape" : "bar",
+            "fontFace" : "Fira Code",
+            "fontSize" : 10,
+            "guid" : "{6f9994f0-4403-5e85-9cce-98e5da3839bb}",
+            "historySize" : 9001,
+            "name" : "WSL (16.04)",
+            "padding" : "0, 0, 0, 0",
+            "snapOnInput" : true,
+            "useAcrylic" : false,
+            "startingDirectory": "~"
+        },
+        {
+            "acrylicOpacity" : 0.75,
+            "closeOnExit" : false,
+            "colorScheme" : "Material Darker",
+            "commandline" : "wsl.exe",
+            "cursorColor" : "#FFFFFF",
+            "cursorShape" : "bar",
+            "fontFace" : "Fira Code",
+            "fontSize" : 10,
+            "guid" : "{a664cb3b-40ba-4be4-9969-c3f6a10a48cb}",
+            "historySize" : 9001,
+            "name" : "WSL (18.04)",
+            "padding" : "0, 0, 0, 0",
+            "snapOnInput" : true,
+            "useAcrylic" : false,
+            "startingDirectory": "~"
+        },
+        {
+            "guid" : "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "name" : "Ubuntu",
+            "source" : "Windows.Terminal.Wsl"
+        },
+        {
+            "guid" : "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+            "name" : "Ubuntu-18.04",
+            "source" : "Windows.Terminal.Wsl"
+        },
+        {
+            "guid" : "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "name" : "Azure Cloud Shell",
+            "source" : "Windows.Terminal.Azure"
+        }
+    ],
+    "schemes" : 
+    [
+        {
+            "background" : "#212121",
+            "black" : "#212121",
+            "blue" : "#6C8CF7",
+            "brightBlack" : "#4A4A4A",
+            "brightBlue" : "#7871F0",
+            "brightCyan" : "#6BCBFF",
+            "brightGreen" : "#8DE8C3",
+            "brightPurple" : "#7053FF",
+            "brightRed" : "#FFAA82",
+            "brightWhite" : "#FFFFFF",
+            "brightYellow" : "#FFDD89",
+            "cyan" : "#6BCBFF",
+            "foreground" : "#FFFFFF",
+            "green" : "#8DE8C3",
+            "name" : "Material Darker",
+            "purple" : "#EA92C7",
+            "red" : "#FFAA82",
+            "white" : "#D6CCB2",
+            "yellow" : "#FFDD89"
+        },
+        {
+            "background" : "#212121",
+            "black" : "#212121",
+            "blue" : "#B2CCD6",
+            "brightBlack" : "#F07178",
+            "brightBlue" : "#89DDFF",
+            "brightCyan" : "#C792EA",
+            "brightGreen" : "#FFCB6B",
+            "brightPurple" : "#82AAFF",
+            "brightRed" : "#F78C6C",
+            "brightWhite" : "#FF5370",
+            "brightYellow" : "#C3E88D",
+            "cyan" : "#EEFFFF",
+            "foreground" : "#FF5370",
+            "green" : "#353535",
+            "name" : "Material Darker (Base16)",
+            "purple" : "#EEFFFF",
+            "red" : "#303030",
+            "white" : "#FFFFFF",
+            "yellow" : "#4A4A4A"
+        }
+    ]
+}

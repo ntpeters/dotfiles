@@ -58,6 +58,10 @@ New-Link -TargetPath "${Env:UserProfile}\.config\nvim\ginit.vim" -LinkPath $Scri
 $Script:VisualStudioCodeConfig = "${Env:AppData}\Code\User\settings.json"
 New-Link -TargetPath "${Env:UserProfile}\.config\Code\User\settings.json" -LinkPath $Script:VisualStudioCodeConfig -LinkType 'SymbolicLink'
 
+# Link Windows Terminal config into place
+$Script:TerminalConfig = "${Env:LocalAppData}\Packages\$((Get-AppxPackage Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\profiles.json"
+New-Link -TargetPath "${Env:UserProfile}\.config\windowsTerminal\profiles.json" -LinkPath $Script:TerminalConfig -LinkType 'SymbolicLink'
+
 # Kill other PowerShell instances before installing modules to ensure they aren't in use
 Stop-PowerShell -Type 'Current'
 
