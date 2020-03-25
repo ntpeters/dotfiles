@@ -52,7 +52,7 @@ Function Stop-PowerShell {
         $PromptMessage = "Stopping $($PowerShellInstancesToKill.Count) ${KillTypePromptSegment} instances, ${KillSelfPromptSegment} the current ${CurrentPowerShellType} instance."
         $ShouldKillPowerShellInstances = [bool]($Host.UI.PromptForChoice($PromptMessage, "Continue?", @('&No', '&Yes'), 0))
         If ($ShouldKillPowerShellInstances) {
-            Stop-Process -InputObject $OtherPowerShellInstances -Force
+            Stop-Process -InputObject $PowerShellInstancesToKill -Force
         }
     } Else {
         Write-Host "No matching ${KillTypePromptSegment} instances found."
