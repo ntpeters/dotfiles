@@ -14,7 +14,7 @@
 		[ "Cyan",           "", "$git_untracked" ],
 		[ "Magenta",        "", "$git_remote_state" ],
 		[ "White",          "", "$git_rbracket" ],
-		[ "White",          "", " `n$" ]
+		[ "White",          "", "`n$('$' * ($NestedPromptLevel + 1))" ]
 	],
 	"git": {
 		"prompt_lbracket":    "(",
