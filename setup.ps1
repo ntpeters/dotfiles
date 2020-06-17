@@ -77,10 +77,10 @@ function Update-Links {
     New-Link -TargetPath "${Env:UserProfile}\.config\Code\User\settings.json" -LinkPath $Script:VisualStudioCodeConfig -LinkType 'SymbolicLink'
 
     # Link Windows Terminal config into place
-    $Script:TeriminalConfigDotfile = "${Env:UserProfile}\.config\windowsTerminal\profiles.json"
-    $Script:TerminalConfigFormatString = "${Env:LocalAppData}\Packages\{0}\LocalState\profiles.json"
+    $Script:TeriminalConfigDotfile = "${Env:UserProfile}\.config\windowsTerminal\settings.json"
+    $Script:TerminalConfigFormatString = "${Env:LocalAppData}\Packages\{0}\LocalState\settings.json"
     $Script:TerminalConfig = [string]::Format($Script:TerminalConfigFormatString, (Get-AppxPackage Microsoft.WindowsTerminal).PackageFamilyName)
-    $Script:TerminalPreviewConfig = [string]::Format($Script:TerminalConfigFormatString, (Get-AppxPackage Microsoft.WindowsTerminal).PackageFamilyName)
+    $Script:TerminalPreviewConfig = [string]::Format($Script:TerminalConfigFormatString, (Get-AppxPackage Microsoft.WindowsTerminalPreview).PackageFamilyName)
     New-Link -TargetPath $Script:TeriminalConfigDotfile -LinkPath $Script:TerminalConfig -LinkType 'SymbolicLink'
     New-Link -TargetPath $Script:TeriminalConfigDotfile -LinkPath $Script:TerminalPreviewConfig -LinkType 'SymbolicLink'
 }
