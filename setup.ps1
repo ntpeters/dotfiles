@@ -175,8 +175,11 @@ function Initialize-PowerShell {
 
     # Import concfg settings
     if ($null -ne $(Get-Command concfg -ErrorAction 'Ignore')) {
-        Write-Output "Running concfg clean to reset shell registry entries and shortcut properties..."
-        concfg clean
+        if ($PSCmdlet.ShouldProcess("Run 'concfg clean' to reset shell registry entries and shortcut properties", $null , $null)) {
+            Write-Output "Running 'concfg clean' to reset shell registry entries and shortcut properties..."
+            concfg clean
+        }
+
         Write-Output "Importing concgf settings..."
         concfg import --non-interactive "${Env:UserProfile}\.config\concfg\settings.json"
     }
@@ -198,8 +201,8 @@ function Initialize-PowerShell {
     Install-UnloadedModule -Name PSFzf
 
     # Source the PowerShell profile
-    Write-Output "Sourcing PowerShell profile..."
-    . $Script:PowerShellProfile
+    Write-Output "Sourcing PowerShell profile: $Profile"
+    . $Profile
 }
 
 function Add-DefenderExclusions {
