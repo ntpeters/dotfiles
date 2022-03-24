@@ -193,6 +193,10 @@ function Initialize-PowerShell {
     Write-Output "Installing PSReadLine..."
     Install-UnloadedModule -Name PSReadLine
 
+    # Use latest version instead of the one shipped in-box
+    Write-Output "Installing PSFzf..."
+    Install-UnloadedModule -Name PSFzf
+
     # Source the PowerShell profile
     Write-Output "Sourcing PowerShell profile..."
     . $Script:PowerShellProfile
