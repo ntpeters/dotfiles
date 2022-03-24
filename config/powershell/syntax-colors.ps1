@@ -1,6 +1,12 @@
 # Set syntax highlighting colors for PowerShell
 
-If ((Get-Module PSReadline).Version.Major -Ge 2) {
+$PSReadlineModule = Get-Module -Name PSReadline
+if ($null -eq $PSReadlineModule) {
+    # If PSReadline isn't loaded, there's nothing to do here
+    return
+}
+
+if ($PSReadlineModule.Version.Major -ge 2) {
     # Color dictionary supports `ConsoleColor`, hex RGB, or VT control sequences
     Set-PSReadlineOption -Colors @{
         "Comment" = [ConsoleColor]::DarkCyan
@@ -15,7 +21,7 @@ If ((Get-Module PSReadline).Version.Major -Ge 2) {
         "Command" = "$([char]0x1b)[97;44m"  # Foreground: White, Background: Blue
         "Default" = [ConsoleColor]::White
         }
-} Else {
+} else {
     # Use old style color options for PSReadline versions before 2.0
     Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkCyan
     Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkMagenta
