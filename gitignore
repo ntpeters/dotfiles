@@ -25,6 +25,8 @@ install_manifest.txt
 TAGS
 !TAGS/
 tags
+tags.lock
+tags.temp
 !tags/
 gtags.files
 GTAGS
