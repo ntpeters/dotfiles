@@ -2,7 +2,7 @@
 # and for the current user if running on Windows.
 
 # Append custom module directory to PSModulePath if it's not already there
-$CustomModulePath = "${Env:UserProfile}\config\powershell\modules"
+$CustomModulePath = "${Env:UserProfile}\.config\powershell\modules"
 if ($Env:PSModulePath -notcontains $CustomModulePath) {
     $Env:PSModulePath = "${Env:PSModulePath};$CustomModulePath"
 }
