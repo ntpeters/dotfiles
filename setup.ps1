@@ -239,6 +239,9 @@ function Install-Apps {
     # TODO: Write helpers for installing from these package managers
     # Install global npm packages
     if ($null -ne $(Get-Command npm -ErrorAction 'Ignore')) {
+        Write-Output "Ensuring NPM is up to date..."
+        npm update --global npm
+
         Write-Output "Installing NPM packages"
         npm install --global neovim
         if ($LastExitCode -ne 0) {
@@ -246,6 +249,17 @@ function Install-Apps {
         }
     } else {
         Write-Error "Failed to install NPM packages: NPM not found"
+    }
+
+    # Install pip packages
+    if ($null -ne $(Get-Command pip -ErrorAction 'Ignore')) {
+        Write-Output "Installing pip packages"
+        pip install pynvim
+        if ($LastExitCode -ne 0) {
+            Write-Error "Failed to install pip package: 'pynvim'"
+        }
+    } else {
+        Write-Error "Failed to install pip packages: pip not found"
     }
 
     # Install global cargo packages
