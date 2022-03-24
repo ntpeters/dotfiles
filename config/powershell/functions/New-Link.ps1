@@ -42,11 +42,11 @@ Function New-Link {
         [string] $LinkType = "SymbolicLink"
     )
 
-    $TargetItem = Get-Item -Path $TargetPath
+    $TargetItem = Get-Item -Force -Path $TargetPath
 
     # Check if a file already exists at the link destination
     If (Test-Path -Path $LinkPath) {
-        $LinkItem = Get-Item -Path $LinkPath
+        $LinkItem = Get-Item -Force -Path $LinkPath
 
         # Check if the existing file is a link. Both junctions and symbolic links should be reparse points as well.
         $IsReparsePoint = [bool]($LinkItem.Attributes -band [IO.FileAttributes]::ReparsePoint)
@@ -81,6 +81,13 @@ Function New-Link {
                 Throw "A backup already exists for this destination: '${LinkBackupPath}'"
             }
             Rename-Item -Path $LinkItem.FullName -NewName $LinkBackupName
+        }
+    } else {
+        # Create the directory structure if needed
+        $LinkDirectory = Split-Path -Path $LinkPath -Parent
+        if (-not (Test-Path -Path $LinkDirectory)) {
+            Write-Warning "Destination directory for link does not exist. Creating it now: $LinkDirectory"
+            New-Item -Path $LinkDirectory -ItemType  'Directory' -Force
         }
     }
 
