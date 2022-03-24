@@ -10,6 +10,7 @@
 	excludesfile = ~/.gitignore
 	quotePath = false
 	precomposeunicode = true
+	pager = less -FLRci --tilde --mouse
 [color]
 	ui = true
 [push]
@@ -41,5 +42,26 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[pager]
+	diff = LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse' && delta 2>/dev/null || less
+	show = LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse' && delta 2>/dev/null || less
+	stash = LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse' && delta 2>/dev/null || less
+	log = LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse' && delta 2>/dev/null || less
+	reflog = LESS='--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse' && delta 2>/dev/null || less
+[delta]
+	# plus-style = "syntax #012800"
+	# minus-style = "syntax #340001"
+	# plus-style = "syntax auto"
+	minus-style = "syntax auto"
+	plus-emph-style = "syntax bold underline auto"
+	minus-emph-style = "syntax bold strike auto"
+	# syntax-theme = OneHalfDark
+	navigate = true
+	;hyperlinks = true
+	line-numbers = true
+	zero-style = dim syntax
+	true-color = always
+[interactive]
+	diffFilter = delta --color-only
 [include]
 	path = ~/.gitconfig.local
