@@ -42,10 +42,12 @@ Function New-Link {
         [string] $LinkType = "SymbolicLink"
     )
 
+    # Include the `-Force` flag to ensure `$TargetPath` is found even if it's hidden
     $TargetItem = Get-Item -Force -Path $TargetPath
 
     # Check if a file already exists at the link destination
     If (Test-Path -Path $LinkPath) {
+        # Include the `-Force` flag to ensure `$LinkPath` is found even if it's hidden
         $LinkItem = Get-Item -Force -Path $LinkPath
 
         # Check if the existing file is a link. Both junctions and symbolic links should be reparse points as well.
