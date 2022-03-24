@@ -154,4 +154,4 @@ function Import-ScoopFile {
 }
 #endregion Exported Functions
 
-Export-ModuleMember -Function 'Install-Scooop', 'Add-ScoopBucket', 'Install-ScoopPackage', 'Read-ScoopFile', 'Import-ScoopFile'
+Export-ModuleMember -Function 'Install-Scoop', 'Add-ScoopBucket', 'Install-ScoopPackage', 'Read-ScoopFile', 'Import-ScoopFile'
