@@ -63,5 +63,7 @@
 	true-color = always
 [interactive]
 	diffFilter = delta --color-only
+[init]
+	defaultBranch = main
 [include]
 	path = ~/.gitconfig.local
