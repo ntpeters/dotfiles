@@ -6,7 +6,7 @@
     When imported into Windows PowerShell the following ReadOnly variables are defined
     to match PowerShell Core: `IsWindows`, `IsMacOS`, `IsLinux`.
 
-    When imported into any PowerShell the ReadOnly varialbe`IsWSL` is defined.
+    When imported into any PowerShell the ReadOnly variable `IsWSL` is defined.
 
     Ideally these variables would also have the AllScope option set to truly match PowerShell Core,
     but unfortunately that option is currently broken for modules:
