@@ -10,8 +10,9 @@ $Script:ScriptDirectory = (Split-Path -Parent $MyInvocation.MyCommand.Definition
 . $Script:ScriptDirectory\functions\Show-Colors.ps1
 . $Script:ScriptDirectory\functions\Install-UnloadedModule.ps1
 . $Script:ScriptDirectory\functions\Stop-PowerShell.ps1
+. $Script:ScriptDirectory\functions\Get-CommandTarget.ps1
 
-Export-ModuleMember -Alias export, exa, colors, inumo, killps -Function 'Export-Variable', 'Invoke-Exa', 'Show-Colors', 'Install-UnloadedModule', 'Stop-PowerShell'
+Export-ModuleMember -Alias export, exa, colors, inumo, killps, which -Function 'Export-Variable', 'Invoke-Exa', 'Show-Colors', 'Install-UnloadedModule', 'Stop-PowerShell', 'Get-CommandTarget'
 
 # Load Windows only functions.
 # We're running on Windows if either:
