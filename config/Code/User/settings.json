@@ -26,11 +26,8 @@
     "python.disablePromptForFeatures": [
         "pylint"
     ],
-
-    "window.zoomLevel": 0,
     "window.titleBarStyle": "custom",
     "clang.diagnostic.enable": true,
-
     "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "workbench.iconTheme": "eq-material-theme-icons-palenight",
     "workbench.colorCustomizations": {
@@ -43,16 +40,20 @@
 
     "breadcrumbs.enabled": true,
 
-    "cmake-tools-helper.cmake_download_path": "C:\\Users\\nathpete\\.vscode\\extensions\\maddouri.cmake-tools-helper-0.2.1\\cmake_download",
+    // Uncomment and set the correct path if needed
+    // "cmake-tools-helper.cmake_download_path": "C:\\Users\\nathpete\\.vscode\\extensions\\maddouri.cmake-tools-helper-0.2.1\\cmake_download",
 
     "cmake.configureOnOpen": true,
-    "cmake.configureArgs": [
-        "-G\"Ninja\"",
-        "-H.",
-        "-B_build/onecore/x86/debug",
-        "-DPLATFORM=onecore",
-        "-DCDP_BUILD_ARCH=x86"
-    ],
+
+    // Uncomment and set the appropriate settings if needed
+    // "cmake.configureArgs": [
+    //     "-G\"Ninja\"",
+    //     "-H.",
+    //     "-B_build/onecore/x86/debug",
+    //     "-DPLATFORM=onecore",
+    //     "-DCDP_BUILD_ARCH=x86"
+    // ],
+
     "explorer.confirmDragAndDrop": false,
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
@@ -61,5 +62,48 @@
     "C_Cpp.default.cStandard": "c11",
     "editor.smoothScrolling": true,
     "editor.suggestSelection": "first",
-    "[markdown]": {}
+    "[markdown]": {
+        "editor.defaultFormatter": "fcrespo82.markdown-table-formatter"
+    },
+    "cSpell.userWords": [
+        "Retriable",
+        "configurability"
+    ],
+    // Uncomment and set the correct git path if needed
+    // "git.path": "E:\\tools\\scoop\\apps\\git\\current\\cmd\\git.exe",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell Core": {
+            "path": [
+                "pwsh.exe"
+            ],
+            "args": []
+        },
+        "PowerShell": {
+            "source": "PowerShell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": []
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        }
+    },
+    "terminal.integrated.shell.windows": "pwsh.exe",
+    "terminal.integrated.shellArgs.windows": [],
+    "workbench.preferredHighContrastColorTheme": "Default Dark+",
+    "window.autoDetectHighContrast": false,
+    "workbench.productIconTheme": "fluent-icons",
+    "arduino.path": "C:\\Program Files (x86)\\Arduino",
+    "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json",
+    "redhat.telemetry.enabled": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
 }
