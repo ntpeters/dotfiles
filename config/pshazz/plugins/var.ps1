@@ -1,5 +1,18 @@
-# Plugin to define custom variables to use in the promp
+# Plugin to define custom variables to use in the prompt
 # NOTE: The values will be expanded when they're loaded, so they must be properly escaped
+# There are three scopes for the variables defined by this plugin:
+#  - Global:
+#    - Available in all PowerShell instances
+#    - Defined directly in the 'var' section of the theme
+#    - Exposed as 'var_<var-name>'
+#  - PowerShell Core:
+#    - Available only in PowerShell Core instances
+#    - Defined in a 'pwsh' sub-section within the 'var' section of the theme
+#    - Exposed as 'var_pwsh_<var-name'
+#  - Windows PowerShell:
+#    - Available only in Windows PowerShell instances
+#    - Defined in a 'ps' sub-section within the 'var' section of the theme
+#    - Exposed as 'var_ps_<var-name'
 
 function pshazz:var:init {
     $var = $global:pshazz.theme.var
