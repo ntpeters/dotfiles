@@ -42,6 +42,8 @@ Export-Variable 'CCACHE_MAXSIZE' "15G"
 Export-Variable 'PAGER' 'less'
 Export-Variable 'LESS' '--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse'
 
+Export-Variable 'SCOOP' "${Env:UserProfile}\scoop"
+
 # Use fd for fzf if available.
 if ($null -ne $(Get-Command fd -ErrorAction 'Ignore')) {
     Export-Variable 'FZF_DEFAULT_COMMAND' "fd --type file"
