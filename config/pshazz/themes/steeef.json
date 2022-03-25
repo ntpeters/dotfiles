@@ -1,31 +1,39 @@
 ﻿{
-	"plugins": [ "git", "aliases", "dircolors", "resetcolor" ],
+	"plugins": [ "git2", "aliases", "dircolors", "resetcolor", "admin", "var" ],
 	"prompt": [
-		[ "DarkMagenta",    "", "$user" ],
+		[ "Red",            "", "$var_pwsh_ansi_red$admin_lbracket"],
+		[ "Red",            "", "$var_pwsh_ansi_red$admin"],
+		[ "Red",            "", "$var_pwsh_ansi_red$admin_rbracket"],
+		[ "DarkMagenta",    "", "$var_pwsh_ansi_purple$user" ],
 		[ "White",          "", " at "],
-		[ "Red",            "", "$hostname" ],
+		[ "Red",            "", "$var_pwsh_ansi_orange$hostname" ],
 		[ "White",          "", " in " ],
-		[ "Green",          "", "$path" ],
+		[ "Green",          "", "$var_pwsh_ansi_limegreen$path" ],
 		[ "White",          "", " $git_lbracket" ],
-		[ "DarkCyan",       "", "$git_branch" ],
-		[ "Green",          "", "$git_staged" ],
-		[ "Red",            "", "$git_unstaged" ],
-		[ "Yellow",         "", "$git_stash" ],
-		[ "Cyan",           "", "$git_untracked" ],
-		[ "Magenta",        "", "$git_remote_state" ],
+		[ "DarkCyan",       "", "$var_pwsh_ansi_turquoise$git_branch" ],
+		[ "Red",            "", "$var_pwsh_ansi_orange$git_unstaged" ],
+		[ "Green",          "", "$var_pwsh_ansi_limegreen$git_staged" ],
+		[ "Cyan",           "", "$var_pwsh_ansi_hotpink$git_untracked" ],
+		[ "Yellow",         "", "$var_pwsh_ansi_yellow$git_stash" ],
+		[ "Magenta",        "", "$var_pwsh_ansi_darkblue$git_remote_state" ],
 		[ "White",          "", "$git_rbracket" ],
+		[ "White",          "", "$git_action_lbracket" ],
+		[ "Green",          "", "$var_pwsh_ansi_limegreen$git_action"],
+		[ "White",          "", "$git_action_rbracket" ],
 		[ "White",          "", "`n$('$' * ($NestedPromptLevel + 1))" ]
 	],
-	"git": {
-		"prompt_lbracket":    "(",
-		"prompt_rbracket":    ")",
-		"prompt_unstaged":    "●",
-		"prompt_staged":      "●",
-		"prompt_stash":       "●",
-		"prompt_untracked":   "●",
-		"prompt_remote_push": "●",
-		"prompt_remote_pull": "●",
-		"prompt_remote_same": " "
+	"git2": {
+		"prompt_lbracket":        "(",
+		"prompt_rbracket":        ")",
+		"prompt_unstaged":        "●",
+		"prompt_staged":          "●",
+		"prompt_stash":           "●",
+		"prompt_untracked":       "●",
+		"prompt_remote_push":     "●",
+		"prompt_remote_pull":     "●",
+		"prompt_remote_same":     "",
+		"prompt_action_lbracket": "(",
+		"prompt_action_rbracket": ")"
 	},
 	"dircolors": {
 		"dirs": [
@@ -39,5 +47,22 @@
 		    ["(?ix).(sln|csproj|sqlproj|proj|targets)$",          "darkred",    ""],
 		    [".*",                                                "White",      ""]
 		]
+	},
+	"admin": {
+		"prompt_lbracket":    "[",
+		"prompt_rbracket":    "] ",
+		"prompt_admin":       "admin"
+	},
+	"var": {
+		"pwsh": {
+			"ansi_turquoise": "`e[38;5;81m",
+			"ansi_orange":    "`e[38;5;166m",
+			"ansi_purple":    "`e[38;5;135m",
+			"ansi_hotpink":   "`e[38;5;161m",
+			"ansi_limegreen": "`e[38;5;118m",
+			"ansi_yellow":    "`e[38;5;226m",
+			"ansi_darkblue":  "`e[38;5;27m",
+			"ansi_red":       "`e[38;5;196m"
+		}
 	}
 }
