@@ -43,8 +43,10 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
+Plug 'ctrlpvim/ctrlp.vim', ntpeters#util#plugEnableIf(!executable('fzf'))
+Plug 'tacahiroy/ctrlp-funky', ntpeters#util#plugEnableIf(!executable('fzf'))
+Plug 'junegunn/fzf', ntpeters#util#plugEnableIf(executable('fzf'))
+Plug 'junegunn/fzf.vim', ntpeters#util#plugEnableIf(executable('fzf'))
 Plug 'tpope/vim-endwise'
 Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
@@ -83,8 +85,15 @@ let g:loaded_logipat           = 1
 " Tell vim-whitespace to strip whitespace on save
 let g:strip_whitespace_on_save = 1
 
-" Enable CtrlP extensions
-let g:ctrlp_extensions = ['funky']
+if (!executable('fzf'))
+    " Enable CtrlP extensions
+    let g:ctrlp_extensions = ['funky']
+
+    " Use fd for CtrlP if available
+    if (executable('fd'))
+        let g:ctrlp_user_command = 'fd --type file'
+    endif
+endif
 
 " Configure Rainbow Parenthese
 let g:rainbow_conf = {
@@ -265,10 +274,24 @@ set viewoptions+=folds   " All local fold options (ie. opened/closed/manual fold
 set viewoptions+=slash   " Backslashes in filenames are replaced with foward slashes
 set viewoptions+=unix    " Use Unix EOL
 
-" Keys for CtrlP Funky
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+" Use FZF if available, otherwise fallback to CtrlP
+if (executable('fzf'))
+    " Tell FZF to use the bottom 40% off the screen
+    let g:fzf_layout = { 'down': '~40%' }
+
+    " Remap CtrlP mappings to FZF
+    nnoremap <c-p> :Files<Cr>
+    nnoremap <Leader>fu :Tags<Cr>
+
+    " Search tags with the word under the cursor
+    nnoremap <Leader>fU :execute 'Tags ' . expand('<cword>')<Cr>
+else
+    " Keys for CtrlP Funky
+    nnoremap <Leader>fu :CtrlPFunky<Cr>
+
+    " Narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+endif
 
 " Enable 'very magic' search mode
 nnoremap / /\v
