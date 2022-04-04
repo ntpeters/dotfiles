@@ -169,6 +169,7 @@ set showcmd
 set hidden
 set wildmenu
 set wildmode=list:longest
+set wildignorecase
 set cursorline
 set cursorcolumn
 set ruler
@@ -269,9 +270,12 @@ nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
-" Set search key to /
+" Enable 'very magic' search mode
 nnoremap / /\v
 vnoremap / /\v
+
+" Search for the word under the curoser with leader+/
+nnoremap <Leader>/ *
 
 " Unhighlight search terms with leader+space
 nnoremap <leader><space> :noh<cr>
