@@ -84,6 +84,7 @@ let g:loaded_logipat           = 1
 
 " Tell vim-whitespace to strip whitespace on save
 let g:strip_whitespace_on_save = 1
+let g:strip_only_modified_lines = 1
 
 if (!executable('fzf'))
     " Enable CtrlP extensions
