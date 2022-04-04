@@ -122,6 +122,9 @@ let g:rainbow_conf = {
 " Enable Rainbow Parenthesis
 let g:rainbow_active = 1
 
+" Prevent buffergator from resizing fullscreen gVim windows
+let g:buffergator_autoexpand_on_split = 0
+
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Put all vimrc auto commands in their own group
