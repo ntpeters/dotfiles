@@ -291,7 +291,19 @@ function Install-Apps {
 }
 
 function Set-WindowsSettings {
-    Write-Warning "TODO: Windows settings"
+    # Set up the parameters for Set-ItemProperty
+    # Possible values are:
+    # 1: This PC
+    # 2: Quick Access
+    # 3: Downloads
+    $sipParams = @{
+        Path  = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+        Name  = 'LaunchTo'
+        Value = 1 # Set the LaunchTo value for "This PC"
+    }
+
+  # Run Set-ItemProperty with the parameters we set above
+  Set-ItemProperty @sipParams
 }
 
 function Set-RegistrySettings {
