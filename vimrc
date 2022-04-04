@@ -199,7 +199,8 @@ set listchars=tab:▸\ ,eol:¬
 set splitbelow
 set splitright
 
-set modelines=0
+set modeline
+set modelines=3
 
 " Tell gitgutter to always show sign column
 set signcolumn=yes
