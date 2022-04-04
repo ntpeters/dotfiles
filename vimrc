@@ -82,6 +82,8 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
 
+let g:gutentags_modules = ['ctags']
+
 " Tell vim-whitespace to strip whitespace on save
 let g:strip_whitespace_on_save = 1
 let g:strip_only_modified_lines = 1
