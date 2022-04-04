@@ -52,6 +52,7 @@ Plug 'ludovicchabant/vim-gutentags', ntpeters#util#plugEnableIf(executable('ctag
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
+Plug 'unblevable/quick-scope'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
@@ -112,6 +113,8 @@ let g:rainbow_conf = {
 " Enable Rainbow Parenthesis
 let g:rainbow_active = 1
 
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
 " Put all vimrc auto commands in their own group
 augroup vimrc
     autocmd!
@@ -137,6 +140,9 @@ augroup vimrc
 
     " Highlight anything beyond column 120 in red
     autocmd BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
+
+    autocmd ColorScheme * highlight QuickScopePrimary ctermfg=119 ctermbg=22 cterm=underline guifg='#87ff5f' guibg='#005f00' gui=underline
+    autocmd ColorScheme * highlight QuickScopeSecondary ctermfg=117 ctermbg=55 cterm=underline guifg='#87dfff' guibg='#5f00af' gui=underline
 augroup END
 
 set autoindent
