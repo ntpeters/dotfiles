@@ -59,6 +59,9 @@ Plug 'unblevable/quick-scope'
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
 Plug 'alem0lars/vim-colorscheme-darcula'
+
+" Always load devicons last
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " Remap leader from '\' to ','
