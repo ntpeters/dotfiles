@@ -56,6 +56,7 @@ Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 Plug 'unblevable/quick-scope'
 Plug 'PProvost/vim-ps1'
+Plug 'editorconfig/editorconfig-vim'
 
 " Setup Theme Plugins
 Plug 'nanotech/jellybeans.vim'
@@ -162,6 +163,15 @@ augroup vimrc
 
     autocmd ColorScheme * highlight QuickScopePrimary ctermfg=119 ctermbg=22 cterm=underline guifg='#87ff5f' guibg='#005f00' gui=underline
     autocmd ColorScheme * highlight QuickScopeSecondary ctermfg=117 ctermbg=55 cterm=underline guifg='#87dfff' guibg='#5f00af' gui=underline
+
+    " Disable tab expansion for certain filetypes that should use tabs instead of spaces
+    let preserveTabsFiletypes = ['gitconfig', 'makefile']
+    autocmd BufEnter * if index(preserveTabsFiletypes, &filetype) >= 0 | setlocal noexpandtab | endif
+
+    " Redraw the status line on mode change to trigger a redraw of the cursor line number.
+    " This allows the colors to stay in sync since the highlight groups are
+    " linked: CursorLineNr -> LightlineLeft_active_0
+    autocmd ModeChanged * redrawstatus
 augroup END
 
 set autoindent
@@ -191,6 +201,7 @@ set wildmode=list:longest
 set wildignorecase
 set cursorline
 set cursorcolumn
+set cursorlineopt=both
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
@@ -367,6 +378,18 @@ nnoremap :X :x
 " Hit F9 to toggle spaces and tabs
 nmap <silent> <F9> :call ntpeters#util#toggleTabs()<CR>
 
+" Search help for the word under the cursor
+nnoremap <Leader>h :execute 'help ' . expand('<cword>')<Cr>
+
+" Enable 256 color support explicitly if we're running on Windows in a terminal
+" that supports it. This only applies to Vim, Neovim correctly handles this.
+if &term == 'win32' && ($TERM == 'xterm-256color' || $COLORTERM == 'truecolor')
+    " Do not set `term` to anything other than 'win32', as that is the only
+    " officially supported term by Vim on Windows and other values could have
+    " unexpected behavior. For more info see :help win32-term.
+    let &t_Co = 256
+endif
+
 " Set colorscheme options based on detected 256 color support
 if &t_Co == 256
     " Use 24-bit color if available
@@ -404,6 +427,9 @@ highlight ColorColumn ctermbg=19
 " Set color for cursor line and column
 highlight CursorLine ctermbg=232
 highlight CursorColumn ctermbg=232
+
+" Link the cursor line highlight to the active mode highlight from Lightline
+highlight! link CursorLineNr LightlineLeft_active_0
 
 " Load local vim config if it exists
 let s:localRcPath = glob('~/.vimrc.local')
