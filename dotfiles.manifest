@@ -4,6 +4,7 @@
 .antigenrc
 .bashrc
 .bash_profile
+.batrc
 .conemu/themes
 .config/Code/User/settings.json
 .config/concfg/settings.json

@@ -20,6 +20,10 @@ if (Test-Path -Path $Util) {
 # Configure the prompt for cmd. See 'prompt /?' for info on accepted format codes.
 Export-Variable 'Prompt' "${Env:UserName}`$Sat`$S${Env:ComputerName}`$Sin`$S`$P`$_`$`$`$S"
 
+# TODO: cmd prompt, now featuring colors?!
+# Doesn't work when run from Windows PowerShell since it fails to parse the escape codes
+#Export-Variable 'Prompt' "`e[38;5;135m${Env:UserName}`e[0m]`$Sat`e[38;5;166m`$S${Env:ComputerName}`e[0m`$Sin`e[38;5;118m`$S`$P`$_`e[0m`$`$`$S"
+
 # Enable processing of ANSI sequences in ConEmu.
 Export-Variable 'ConEmuANSI' 'ON'
 
@@ -28,6 +32,7 @@ Export-Variable 'PYTHONIOENCODING' 'utf-8'
 
 # Tell ripgrep where to load its config from.
 Export-Variable 'RIPGREP_CONFIG_PATH' "${Env:UserProfile}\.ripgreprc"
+Export-Variable 'BAT_CONFIG_PATH' "${Env:UserProfile}\.batrc"
 
 # Give CCache more space.
 Export-Variable 'CCACHE_MAXSIZE' "15G"
@@ -57,3 +62,9 @@ if ($null -ne $(Get-Command fd -ErrorAction 'Ignore')) {
 # Counterpart to the existing $Profile variable pointing to a local profile not synced with dotfiles.
 # This is intentionally placed directly in the `Global` scope rather than the `Env` scope to match $Profile.
 $Global:LocalProfile = "${Env:UserProfile}\.config\powershell\local_profile.ps1"
+
+# Source local environment if present
+$LocalEnvironment = "${Env:UserProfile}\.config\powershell\local_environment.ps1"
+if (Test-Path $LocalEnvironment) {
+    . $LocalEnvironment
+}
