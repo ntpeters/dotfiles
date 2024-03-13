@@ -69,7 +69,8 @@ Function New-Link {
             }
         } Else {
             # Compose the file path for the backup file
-            $LinkBackupName = "$($LinkItem.Name).old"
+            $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+            $LinkBackupName = "[$timestamp]$($LinkItem.Name).old"
             If ($LinkItem -Is [System.IO.DirectoryInfo]) {
                 $LinkBackupDirectory = $LinkItem.Parent.FullName
             } Else {

@@ -48,6 +48,9 @@ if (-not $Script:CurrentUserPrincipal.IsInRole([Security.Principal.WindowsBuilti
 # Import utilities used by this script
 Import-Module "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 
+# Load environment variables
+. "${Env:UserProfile}\.config\powershell\environment.ps1"
+
 #region Helpers
 function Get-AppxPackageFamilyName {
     param(
@@ -112,6 +115,8 @@ function Set-ScoopSettings {
 function Update-Links {
     [CmdletBinding(SupportsShouldProcess)]
     param ()
+
+    # TODO: Consider checking for existing contents in PowerShell dir (modules, etc) and moving them into the new unified dir
 
     # Create PowerShell directory if it doesn't already exist
     $Script:WindowsPowerShellHome = "${Env:UserProfile}\Documents\WindowsPowerShell"
@@ -212,10 +217,14 @@ function Add-DefenderExclusions {
     $VsWhereCommand = "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
     $VsInstances = & $VsWhereCommand -prerelease -all -format json | ConvertFrom-Json
     foreach ($VsInstance in $VsInstances) {
+        Write-Output "Adding Defender exclusion for Visual Studio..."
         Add-MpPreference -ExclusionPath $VsInstance.installationPath
     }
 
-    Add-MpPreference -ExclusionPath $Env:CCACHE_DIR
+    if (-not ([String]::IsNullOrWhiteSpace($Env:CCACHE_DIR))) {
+        Write-Output "Adding Defender exclusion for ccache cache directory..."
+        Add-MpPreference -ExclusionPath $Env:CCACHE_DIR
+    }
 }
 
 function Install-OptionalFeatures {
@@ -287,6 +296,22 @@ function Install-Apps {
         }
     } else {
         Write-Error "Failed to install WinGet packages: WinGet not found"
+    }
+
+    # Install Go packages
+    if ($null -ne $(Get-Command go -ErrorAction 'Ignore')) {
+        Write-Output "Installing Go packages..."
+
+        if ($null -ne $(Get-Command path-extractor -ErrorAction 'Ignore')) {
+            go install github.com/edi9999/path-extractor@latest
+            if ($LastExitCode -ne 0) {
+                Write-Error "Failed to install Go package: 'path-extractor'"
+            }
+        } else {
+            Write-Output "path-extractor already installed"
+        }
+    } else {
+        Write-Error "Failed to install Go packages: Go not found"
     }
 }
 

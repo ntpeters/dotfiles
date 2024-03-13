@@ -41,7 +41,16 @@ function pshazz:git2:init {
 		prompt_action_rbracket    = $git2.prompt_action_rbracket;
 	}
 
-	$global:pshazz.completions.git = resolve-path "$Env:SCOOP\apps\pshazz\current\libexec\git-complete.ps1"
+	$pshazzBaseDir = "$Env:SCOOP\apps\pshazz"
+	$pshazzVersionDir = Join-Path -Path $pshazzBaseDir -ChildPath "current"
+	if (-not (Test-Path $pshazzVersionDir)) {
+		# If the symlink for 'current' isn't setup yet (can happen during initial pshazz install) then attempt to find a pshazz version in the expected directory instead
+		$pshazzVersionDir = Get-ChildItem -Path $pshazzBaseDir -Directory | Sort-Object Name -Descending | Select-Object -First 1
+		$firstFolder.FullName
+	}
+	
+	$gitCompletionPath = Join-Path -Path $pshazzVersionDir -ChildPath "libexec\git-complete.ps1"
+	$global:pshazz.completions.git = resolve-path $gitCompletionPath
 }
 
 # Based on posh-git

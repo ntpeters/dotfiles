@@ -36,17 +36,17 @@ Function Export-Variable {
     $processEnvironmentTarget = [System.EnvironmentVariableTarget]::Process
     $userEnvironmentTargetString = $userEnvironmentTarget.ToString().ToLower()
     $processEnvironmentTargetString = $processEnvironmentTarget.ToString().ToLower()
-    $commonMessageFragmentFormat = "variable '$Name' for the current {0} with value of: '$Value'"
+    $commonMessageFragmentFormat = "variable '$Name' for the current {0} with value of: '{1}'"
     $commonNotProcessMessageFragmentFormat = "export as the current value is equal to the provided value for $commonMessageFragmentFormat"
 
     # Set the environment variable for the current user.
     $shouldSetUserVariable = $Force -or ([Environment]::GetEnvironmentVariable($Name, $userEnvironmentTarget) -Ne $Value)
     if ($shouldSetUserVariable) {
-        $shouldProcessCurrentUserMessage = "Exporting $commonMessageFragmentFormat" -f $userEnvironmentTargetString
-        $verboseCurrentUserMessage = "Exported $commonMessageFragmentFormat" -f $userEnvironmentTargetString
+        $shouldProcessCurrentUserMessage = "Exporting $commonMessageFragmentFormat" -f $userEnvironmentTargetString, $Value
+        $verboseCurrentUserMessage = "Exported $commonMessageFragmentFormat" -f $userEnvironmentTargetString, $Value
     } else {
-        $shouldProcessCurrentUserMessage = "Skipping $commonNotProcessMessageFragmentFormat" -f $userEnvironmentTargetString
-        $verboseCurrentUserMessage = "Skipped $commonNotProcessMessageFragmentFormat" -f $userEnvironmentTargetString
+        $shouldProcessCurrentUserMessage = "Skipping $commonNotProcessMessageFragmentFormat" -f $userEnvironmentTargetString, $Value
+        $verboseCurrentUserMessage = "Skipped $commonNotProcessMessageFragmentFormat" -f $userEnvironmentTargetString, $Value
     }
     if ($PSCmdlet.ShouldProcess($shouldProcessCurrentUserMessage, $Name ,"Export-Variable")) {
         if ($shouldSetUserVariable) {
@@ -58,11 +58,11 @@ Function Export-Variable {
     # Also make the variable available immediately in the current session.
     $shouldSetProcessVariable = $Force -or ([Environment]::GetEnvironmentVariable($Name, $processEnvironmentTarget) -Ne $Value)
     if ($shouldSetProcessVariable) {
-        $shouldProcessCurrentProcessMessage = "Exporting $commonMessageFragmentFormat" -f $processEnvironmentTargetString
-        $verboseCurrentProcessMessage = "Exported $commonMessageFragmentFormat" -f $processEnvironmentTargetString
+        $shouldProcessCurrentProcessMessage = "Exporting $commonMessageFragmentFormat" -f $processEnvironmentTargetString, $Value
+        $verboseCurrentProcessMessage = "Exported $commonMessageFragmentFormat" -f $processEnvironmentTargetString, $Value
     } else {
-        $shouldProcessCurrentProcessMessage = "Skipping $commonNotProcessMessageFragmentFormat" -f $processEnvironmentTargetString
-        $verboseCurrentProcessMessage = "Skipped $commonNotProcessMessageFragmentFormat" -f $processEnvironmentTargetString
+        $shouldProcessCurrentProcessMessage = "Skipping $commonNotProcessMessageFragmentFormat" -f $processEnvironmentTargetString, $Value
+        $verboseCurrentProcessMessage = "Skipped $commonNotProcessMessageFragmentFormat" -f $processEnvironmentTargetString, $Value
     }
     if ($PSCmdlet.ShouldProcess($shouldProcessCurrentProcessMessage, $Name ,"Export-Variable")) {
         if ($shouldSetProcessVariable) {

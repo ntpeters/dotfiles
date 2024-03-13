@@ -69,6 +69,11 @@ If (($Global:IsWindows -Eq $True) -And (Test-Path $OpenSshUtils)) {
     Import-Module "$OpenSshUtils"
 }
 
+#Import fuzzy finder utilities
+if ($null -eq (Get-Module 'FuzzyFinderUtils')) {
+    Import-Module 'FuzzyFinderUtils'
+}
+
 # Source local PowerShell profile if one exists.
 If (Test-Path $Global:LocalProfile) {
     . $Global:LocalProfile

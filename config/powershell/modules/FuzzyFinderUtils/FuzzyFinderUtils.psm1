@@ -711,4 +711,9 @@ if ($null -eq $(Get-Command 'bat' -ErrorAction 'Ignore'))
 }
 #endregion Dependency Checks
 
+Set-Alias -Name fdp -Value Select-PathFromFd
+Set-Alias -Name rgp -Value Select-PathFromRg
+Set-Alias -Name fdo -Value Edit-PathFromFd
+Set-Alias -Name rgo -Value Edit-PathFromRg
+
 Export-ModuleMember -Alias fdp, rgp, fdo, rgo -Function 'Select-PathFromFd', 'Select-PathFromRg', 'Edit-PathFromFd', 'Edit-PathFromRg'

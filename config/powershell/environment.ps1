@@ -42,6 +42,11 @@ Export-Variable 'CCACHE_MAXSIZE' "15G"
 Export-Variable 'PAGER' 'less'
 Export-Variable 'LESS' '--quit-if-one-screen --RAW-CONTROL-CHARS --ignore-case --tilde --mouse'
 
+Export-Variable 'EDITOR' 'nvim'
+Export-Variable 'EDITOR_LINE_NUMBER_FORMAT' 'nvim +{1} {0}'
+Export-Variable 'VISUAL' 'code'
+Export-Variable 'VISUAL_LINE_NUMBER_FORMAT' 'code --goto {0}:{1}'
+
 Export-Variable 'SCOOP' "${Env:UserProfile}\scoop"
 
 # Use fd for fzf if available.

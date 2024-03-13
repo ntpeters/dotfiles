@@ -23,8 +23,8 @@ $Script:ModuleFunctions = Join-Path -Path (Split-Path -Parent $MyInvocation.MyCo
 # Replicate the `IsWindows`, `IsMacOS, and `IsLinux` environment variables for consistency with PowerShell Core in Windows PowerShell.
 if ($PSEdition -eq 'Desktop') {
     New-ModuleVariable -Name 'IsWindows' -Value $true -ReadOnly -Description "When true, denotes that the current session is running on Windows."
-    New-ModuleVariable -Name 'IsMacOS' -Value $true -ReadOnly -Description "When true, denotes that the current session is running on macOS."
-    New-ModuleVariable -Name 'IsLinux' -Value $true -ReadOnly -Description "When true, denotes that the current session is running on Linux."
+    New-ModuleVariable -Name 'IsMacOS' -Value $false -ReadOnly -Description "When true, denotes that the current session is running on macOS."
+    New-ModuleVariable -Name 'IsLinux' -Value $false -ReadOnly -Description "When true, denotes that the current session is running on Linux."
 }
 
 # Add an `IsWSL` variable as a counterpart to the other OS check variables.

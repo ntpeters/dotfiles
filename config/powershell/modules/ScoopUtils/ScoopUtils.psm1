@@ -50,7 +50,10 @@ function Add-ScoopBucket {
         [String[]] $Name
     )
 
-    if ($PSCmdlet.ShouldProcess("Add Scoop Bucket: '$Name'", $Name , "Add-ScoopBucket")) {
+    $knownBuckets = scoop bucket known
+    if ($knownBuckets | Where-Object {$_ -eq $Name}) {
+        Write-Output "Scoop bucket '$Name' is already known"
+    } elseif ($PSCmdlet.ShouldProcess("Add Scoop Bucket: '$Name'", $Name , "Add-ScoopBucket")) {
         Write-Output "Adding Scoop bucket '$Name'..."
         scoop bucket add $Name
         if ($LastExitCode -ne 0) {
