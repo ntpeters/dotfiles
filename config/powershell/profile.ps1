@@ -11,7 +11,7 @@ $PSDefaultParameterValues["Out-File:Encoding"] = "UTF8"
 CHCP 65001 | Out-Null
 
 # Init pshazz if available and not already initialized
-if ($null -eq $(Get-Command pshazz -ErrorAction 'Ignore')) {
+if ($null -eq (Get-Command pshazz -ErrorAction 'Ignore')) {
     # TODO: set a default prompt
 } elseif (-not $pshazz) {
     pshazz init
@@ -24,13 +24,27 @@ if ($null -eq $(Get-Command pshazz -ErrorAction 'Ignore')) {
 . "${Env:UserProfile}\.config\powershell\environment.ps1"
 
 # Aliases
-if ($null -ne $(Get-Command thefuck -ErrorAction 'Ignore')) {
+if ($null -ne (Get-Command thefuck -ErrorAction 'Ignore')) {
     Invoke-Expression "$(thefuck --alias)"
     Set-Alias fu fuck
 }
 
-if ($null -ne $(Get-Command path-extractor -ErrorAction 'Ignore')) {
+if ($null -ne (Get-Command path-extractor -ErrorAction 'Ignore')) {
     Set-Alias pe path-extractor
+}
+
+if ($null -ne (Get-Command eza -ErrorAction 'Ignore')) {
+    # Unfortunately needed since `Set-Alias` doesn't support commands with args
+    function Invoke-Eza {
+        eza --classify=auto --color=auto --icons=auto --git --no-permissions --header --group-directories-first @args
+    }
+
+    function Invoke-EzaLong {
+        Invoke-Eza --long
+    }
+
+    Set-Alias ls Invoke-Eza -Scope 'Global' -Option 'AllScope'
+    Set-Alias ll Invoke-EzaLong -Scope 'Global' -Option 'AllScope'
 }
 
 # PSReadLine Settings
