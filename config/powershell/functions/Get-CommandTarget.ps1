@@ -91,6 +91,7 @@ function Get-CommandTarget(
     return $results
 }
 
+# TODO: handle circular refs
 function Get-CommandInfo(
     [Parameter(Position=0, Mandatory=$true)]
     [System.Management.Automation.CommandInfo]
@@ -115,7 +116,7 @@ function Get-CommandInfo(
         Write-Debug "Handled Command: Name='$($Command.Name)'; Type='$($Command.CommandType)'; Source='$($Command.Source)'; ModulePath='$($Command.Module.Path)'; Definition='$($Command.Definition)'"
         $results += "$($Command.Name): aliased to '$($Command.Definition)' $moduleInfo"
 
-        if ($Recurse -and $null -ne $Command.ReferencedCommand)
+        if ($Recurse -and ($null -ne $Command.ReferencedCommand) -and ($Command -ne $Command.ReferencedCommand))
         {
             $results += Get-CommandInfo -Command $Command.ReferencedCommand -Recurse
         }
