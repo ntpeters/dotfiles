@@ -55,7 +55,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 Plug 'unblevable/quick-scope'
-Plug 'PProvost/vim-ps1'
+Plug 'zigford/vim-powershell'
 Plug 'editorconfig/editorconfig-vim'
 
 " Setup Theme Plugins
