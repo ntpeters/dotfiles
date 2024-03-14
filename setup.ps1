@@ -38,6 +38,15 @@ if ($Script:IsOsWindows -eq $false) {
     return
 }
 
+# Block execution of the script as admin.
+# Some things like install apps from Scoop generally shouldn't be done as admin.
+$Script:CurrentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+$Script:CurrentUserPrincipal = New-Object -TypeName Security.Principal.WindowsPrincipal -ArgumentList $Script:CurrentUser
+if ($Script:CurrentUserPrincipal.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
+    Write-Error 'This script should not be executed as an administrator. Elevation will be requested individually for commands that require it.'
+    return
+}
+
 # Import utilities used by this script
 Import-Module "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 
