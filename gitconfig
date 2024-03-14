@@ -66,6 +66,6 @@
 [init]
 	defaultBranch = main
 [credential "helperselector"]
-	selected = manager-core
+	selected = manager
 [include]
 	path = ~/.gitconfig.local
