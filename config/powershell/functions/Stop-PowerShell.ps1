@@ -41,7 +41,7 @@ Function Stop-PowerShell {
     $PowerShellInstancesToKill = Get-Process -Name $PowerShellTypesToKill -ErrorAction 'Ignore'
 
     Write-Debug "Current PID: $PID"
-    Write-Debug "Found $($PowerShellInstancesToKill.Length) PowerShell Instances To Kill (pre-filtered): $($PowerShellInstancesToKill | Select-Object -Property Id,Name | Join-String -Separator ', ')"
+    Write-Debug "Found $($PowerShellInstancesToKill.Length) PowerShell Instances To Kill (pre-filtered): $([string]::Join(',', $($PowerShellInstancesToKill | Select-Object -Property Id,Name | Join-String -Separator ', ')))"
 
     # Compose prompt segment stating the types of instances being killed
     $KillTypePromptSegment = [string]::Join(' or ', $PowerShellTypesToKill)
@@ -71,7 +71,7 @@ Function Stop-PowerShell {
         throw "The 'IncludeSelf' flag was provided, but the current instance type (${CurrentPowerShellType}) was not included in the types to kill (${PowerShellTypesToKill})."
     }
 
-    Write-Debug "Found $($PowerShellInstancesToKill.Length) PowerShell Instances To Kill (filtered): $($PowerShellInstancesToKill | Select-Object -Property Id,Name | Join-String -Separator ', ')"
+    Write-Debug "Found $($PowerShellInstancesToKill.Length) PowerShell Instances To Kill (filtered): $([string]::Join(',', $($PowerShellInstancesToKill | Select-Object -Property Id,Name | Join-String -Separator ', ')))"
 
     # Kill all matching instances
     if ($PowerShellInstancesToKill.Count -gt 0) {

@@ -131,7 +131,7 @@ function Update-Links {
     # If the user's documents directory is not at '~/Documents', link the PowerShell directories into place there too.
     # This will be the case if 'Documents' is being backed up to OneDrive.
     $Script:MyDocumentsPath = [Environment]::GetFolderPath("MyDocuments")
-    if ($Script:MyDocumentsPath -ne "${Env:UserProfile"}\Documents") {
+    if ($Script:MyDocumentsPath -ne "${Env:UserProfile}\Documents") {
         New-Link -TargetPath $Script:WindowsPowerShellHome -LinkPath "${Script:MyDocumentsPath}\WindowsPowerShell" -LinkType 'Junction'
         New-Link -TargetPath $Script:PowerShellCoreHome -LinkPath "${Script:MyDocumentsPath}\PowerShell" -LinkType 'Junction'
     }

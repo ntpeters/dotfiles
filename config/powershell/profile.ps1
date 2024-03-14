@@ -56,6 +56,7 @@ Set-PSReadlineKeyHandler "Ctrl+Backspace" BackwardKillWord
 Set-PSReadlineKeyHandler "Ctrl+LeftArrow" BackwardWord
 Set-PSReadlineKeyHandler "Ctrl+RightArrow" NextWord
 Set-PSReadlineKeyHandler "Tab" MenuComplete
+Set-PSReadLineOption -ExtraPromptLineCount 2
 
 if (($null -ne (Get-Module -Name PSFzf -ListAvailable -ErrorAction Ignore)) -and ($null -ne (Get-Command fzf -ErrorAction Ignore))) {
     # Import-Module PSFzf
@@ -92,3 +93,4 @@ if ($null -eq (Get-Module 'FuzzyFinderUtils')) {
 If (Test-Path $Global:LocalProfile) {
     . $Global:LocalProfile
 }
+
