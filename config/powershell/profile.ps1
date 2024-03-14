@@ -40,7 +40,7 @@ if ($null -ne (Get-Command eza -ErrorAction 'Ignore')) {
     }
 
     function Invoke-EzaLong {
-        Invoke-Eza --long
+        Invoke-Eza --long @args
     }
 
     Set-Alias ls Invoke-Eza -Scope 'Global' -Option 'AllScope'
