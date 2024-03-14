@@ -172,6 +172,9 @@ function Update-Links {
     } else {
         Write-Warning "Skipped linking Windows Terminal Preview profile: Windows Terminal Preview is not installed"
     }
+
+    # Link gitignore as rgignore since ripgrep doesn't seem to handle core.excludesFile correctly on Windows
+    New-Link -TargetPath "${Env:UserProfile}\.gitignore" -LinkPath "${Env:UserProfile}\.rgignore" -LinkType 'SymbolicLink'
 }
 
 function Initialize-PowerShell {
@@ -225,6 +228,9 @@ function Add-DefenderExclusions {
         Write-Output "Adding Defender exclusion for ccache cache directory..."
         Add-MpPreference -ExclusionPath $Env:CCACHE_DIR
     }
+
+    # Defender attack surface reduction rules can completely block delta from running
+    Add-MpPreference -ExclusionProcess 'delta.exe'
 }
 
 function Install-OptionalFeatures {
@@ -274,9 +280,14 @@ function Install-Apps {
     # Install global cargo packages
     if ($null -ne $(Get-Command cargo -ErrorAction 'Ignore')) {
         Write-Output "Installing Cargo packages"
-        cargo install viu
-        if ($LastExitCode -ne 0) {
-            Write-Error "Failed to install Cargo package: 'viu'"
+
+        if ($null -ne $(Get-Command viu -ErrorAction 'Ignore')) {
+            cargo install viu
+            if ($LastExitCode -ne 0) {
+                Write-Error "Failed to install Cargo package: 'viu'"
+            }
+        } else {
+            Write-Output "Cargo package 'viu' already installed"
         }
     } else {
         Write-Error "Failed to install Cargo packages: Cargo not found"
@@ -308,7 +319,7 @@ function Install-Apps {
                 Write-Error "Failed to install Go package: 'path-extractor'"
             }
         } else {
-            Write-Output "path-extractor already installed"
+            Write-Output "Go package 'path-extractor' already installed"
         }
     } else {
         Write-Error "Failed to install Go packages: Go not found"
@@ -343,6 +354,9 @@ function Set-RegistrySettings {
     } else {
         Write-Host -ForegroundColor Green "NTFS long paths already enabled"
     }
+
+    # Disable Edge sidebar
+    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' -Name 'HubsSidebarEnabled' -Value 0
 }
 
 $All = $PSCmdlet.ParameterSetName -eq 'None'
