@@ -168,6 +168,8 @@ x64/
 x86/
 bld/
 *.ide/
+.vs/
+TestResults/
 
 #############
 # Languages #
