@@ -26,3 +26,9 @@ If ($Script:IsOsWindows -Ne $False) {
 
     Export-ModuleMember -Alias startx, isadmin, ln -Function 'Invoke-XLaunch', 'Test-Administrator', 'New-Link'
 }
+
+# TODO: Migration tab completions to something more supported so this shim isn't necessary
+# Add a polyfill shim for TabExapansion on PowerShell >=7.4.
+# Legacy TabExpansion is still used by pshazz tab completions.
+. $Script:ScriptDirectory\functions\TabExpansionShim.ps1
+Export-ModuleMember -Function TabExpansion2
