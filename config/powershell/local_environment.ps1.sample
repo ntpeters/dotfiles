@@ -1,0 +1,10 @@
+# vim: set filetype=powershell :
+
+# Local Environment
+# Sets environment variables that are not intended to be checked in to source control.
+# These are typically machine-specific values that don't make sense to sync.
+# This file will be sourced automatically by 'environment.ps1', so no additional module imports are required.
+#
+# Sample file must be copied into place:
+# Copy-Item "${Env:UserProfile}\.config\powershell\local_environment.ps1.sample" "${Env:UserProfile}\.config\powershell\local_environment.ps1"
+

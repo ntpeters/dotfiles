@@ -165,6 +165,23 @@ function Initialize-PowerShell {
     Write-Output "Installing PSFzf..."
     Install-UnloadedModule -Name PSFzf
 
+    # Copy local configs into place
+    $Script:LocalProfile = "${Env:UserProfile}\.config\powershell\local_profile.ps1"
+    if (-not (Test-Path $Script:LocalProfile)) {
+        Write-Output "Copying local PowerShell profile into place..."
+        Copy-Item "${Env:UserProfile}\.config\powershell\local_profile.ps1.sample" $Script:LocalProfile
+    } else {
+        Write-Output "Local PowerShell profile already exists"
+    }
+
+    $Script:LocalEnvironment = "${Env:UserProfile}\.config\powershell\local_environment.ps1"
+    if (-not (Test-Path $Script:LocalEnvironment)) {
+        Write-Output "Copying local PowerShell environment into place..."
+        Copy-Item "${Env:UserProfile}\.config\powershell\local_environment.ps1.sample" $Script:LocalEnvironment
+    } else {
+        Write-Output "Local PowerShell environment already exists"
+    }
+
     # Source the PowerShell profile
     Write-Output "Sourcing PowerShell profile: $Profile"
     . $Profile

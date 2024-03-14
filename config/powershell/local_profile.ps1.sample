@@ -1,0 +1,9 @@
+# vim: set filetype=powershell :
+
+# Local Profile
+# Profile containing machine-specific configurations not intended to be checked in to source control.
+# This file will be sourced automatically by 'profile.ps1', so no additional module imports are required.
+#
+# Sample file must be copied into place:
+# Copy-Item "${Env:UserProfile}\.config\powershell\local_profile.ps1.sample" "${Env:UserProfile}\.config\powershell\local_profile.ps1"
+

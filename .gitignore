@@ -2,5 +2,9 @@
 !profile
 
 # Ignore local versions of dotfiles
-**/local_*
+local_*
 *.local
+
+# Allow samples for local versios of dotfiles
+!local_*.sample
+!*.local.sample
