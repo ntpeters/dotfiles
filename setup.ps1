@@ -38,13 +38,6 @@ if ($Script:IsOsWindows -eq $false) {
     return
 }
 
-$Script:CurrentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-$Script:CurrentUserPrincipal = New-Object -TypeName Security.Principal.WindowsPrincipal -ArgumentList $Script:CurrentUser
-if (-not $Script:CurrentUserPrincipal.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
-    Write-Error 'This script requires elevation to configure the Windows OpenSSH client'
-    return
-}
-
 # Import utilities used by this script
 Import-Module "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 
@@ -62,42 +55,6 @@ function Get-AppxPackageFamilyName {
         return (Get-AppxPackage -Name $Name).PackageFamilyName
     } else {
         return powershell.exe -NoProfile -Command "(Get-AppxPackage -Name $Name).PackageFamilyName"
-    }
-}
-
-function Install-OpenSsh {
-    [CmdletBinding(SupportsShouldProcess)]
-    param()
-
-    $SshClientCapability = Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Client*'
-    if ($null -eq $SshClientCapability) {
-        throw "Windows Capability 'OpenSSH.Client' not found!"
-    }
-
-    if ($SshClientCapability.State -ne 'Installed') {
-        if ($PSCmdlet.ShouldProcess("Install Windows Capability: 'OpenSSH.Client'", "OpenSSH.Client" , "Add-WindowsCapability")) {
-            Write-Output "Installing OpenSSH.Client..."
-            Add-WindowsCapability -Online -Name 'OpenSSH.Client~~~~0.0.1.0'
-        }
-    } else {
-        Write-Output "OpenSSH.Client already installed!"
-    }
-
-    $SshAgentServiceInfo = Get-Service -Name 'ssh-agent'
-    if ($SshAgentServiceInfo.StartType -ne 'Manual') {
-        if ($PSCmdlet.ShouldProcess("Set service 'ssh-agent' startup type to manual", "ssh-agent" , "Set-Service")) {
-            Set-Service -Name 'ssh-agent' -StartupType Manual
-        }
-    } else {
-        Write-Output "Service 'ssh-agent' startup type is already manual"
-    }
-
-    if ($SshAgentServiceInfo.Status -ne 'Running') {
-        if ($PSCmdlet.ShouldProcess("Start service 'ssh-agent'", $null , $null)) {
-            Start-Service -Name 'ssh-agent'
-        }
-    } else {
-        Write-Output "Service 'ssh-agent' is already running"
     }
 }
 
@@ -185,7 +142,7 @@ function Initialize-PowerShell {
     if ($null -ne $(Get-Command concfg -ErrorAction 'Ignore')) {
         if ($PSCmdlet.ShouldProcess("Run 'concfg clean' to reset shell registry entries and shortcut properties", $null , $null)) {
             Write-Output "Running 'concfg clean' to reset shell registry entries and shortcut properties..."
-            concfg clean
+            sudo concfg clean
         }
 
         Write-Output "Importing concgf settings..."
@@ -221,20 +178,23 @@ function Add-DefenderExclusions {
     $VsInstances = & $VsWhereCommand -prerelease -all -format json | ConvertFrom-Json
     foreach ($VsInstance in $VsInstances) {
         Write-Output "Adding Defender exclusion for Visual Studio..."
-        Add-MpPreference -ExclusionPath $VsInstance.installationPath
+        sudo Add-MpPreference -ExclusionPath $VsInstance.installationPath
     }
 
     if (-not ([String]::IsNullOrWhiteSpace($Env:CCACHE_DIR))) {
         Write-Output "Adding Defender exclusion for ccache cache directory..."
-        Add-MpPreference -ExclusionPath $Env:CCACHE_DIR
+        sudo Add-MpPreference -ExclusionPath $Env:CCACHE_DIR
     }
 
     # Defender attack surface reduction rules can completely block delta from running
-    Add-MpPreference -ExclusionProcess 'delta.exe'
+    if ($null -ne (Get-Command 'delta.exe' -ErrorAction 'Ignore')) {
+        Write-Output "Adding Defender exclusion for delta..."
+        sudo Add-MpPreference -ExclusionProcess 'delta.exe'
+    }
 }
 
 function Install-OptionalFeatures {
-    Install-OpenSsh
+    sudo "${Env:UserProfile}\.dotfiles\setup\scripts\Install-OpenSsh.ps1"
 }
 
 function Install-Apps {
@@ -349,14 +309,20 @@ function Set-RegistrySettings {
     # Enable long paths if needed
     [bool]$LongPathsEnabled = Get-ItemPropertyValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled'
     if (-not $LongPathsEnabled) {
-        Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value $true
+        sudo Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value $true
         Write-Warning "NTFS Long Paths Enabled: A restart is required for this to take effect"
     } else {
         Write-Host -ForegroundColor Green "NTFS long paths already enabled"
     }
 
     # Disable Edge sidebar
-    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' -Name 'HubsSidebarEnabled' -Value 0
+    $EdgePolicies = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
+    if (0 -ne $EdgePolicies.HubsSidebarEnabled) {
+        sudo Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' -Name 'HubsSidebarEnabled' -Value 0
+        Write-Output "Microsoft Edge sidebar disabled"
+    } else {
+        Write-Host -ForegroundColor Green "Microsoft Edge sidebar already disabled"
+    }
 }
 
 $All = $PSCmdlet.ParameterSetName -eq 'None'
