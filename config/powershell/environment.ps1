@@ -7,9 +7,20 @@ if ($Env:PSModulePath -notcontains $CustomModulePath) {
     $Env:PSModulePath = "${Env:PSModulePath};$CustomModulePath"
 }
 
-# Import module to replicate $Is<platform> environment variables in Windows PowerShell,
-# and add an $IsWSL environment variable in both PowerShell Core and Windows PowerShell
-Import-Module -Name OSCheckPortable
+# Replicate the $Is<platform> environment variables in Windows PowerShell, and add an
+# $IsWSL variable in both PowerShell Core and Windows PowerShell.
+# On PowerShell Core, $IsWindows / $IsLinux / $IsMacOS are built-in, so loading the
+# OSCheckPortable module is only worth its ~150ms import cost on Windows PowerShell.
+if ($PSEdition -eq 'Desktop') {
+    Import-Module -Name OSCheckPortable
+} elseif ($IsWindows) {
+    # On Windows, /proc/version can't exist; skip the Select-String entirely (saves ~150ms).
+    Set-Variable -Name IsWSL -Scope Global -Option ReadOnly -Force -Value $false
+} else {
+    Set-Variable -Name IsWSL -Scope Global -Option ReadOnly -Force -Value (
+        [bool](Select-String -LiteralPath '/proc/version','/proc/sys/kernel/osrelease' -Pattern 'Microsoft|WSL' -Quiet -ErrorAction Ignore)
+    )
+}
 
 # Ensure utilities are imported so that `Export-Variable` is defined.
 $Util = "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
@@ -23,6 +34,12 @@ Export-Variable 'Prompt' "${Env:UserName}`$Sat`$S${Env:ComputerName}`$Sin`$S`$P`
 # TODO: cmd prompt, now featuring colors?!
 # Doesn't work when run from Windows PowerShell since it fails to parse the escape codes
 #Export-Variable 'Prompt' "`e[38;5;135m${Env:UserName}`e[0m]`$Sat`e[38;5;166m`$S${Env:ComputerName}`e[0m`$Sin`e[38;5;118m`$S`$P`$_`e[0m`$`$`$S"
+
+# Opt out of PowerShell 7's telemetry. Saves ~25ms on every pwsh launch, since the
+# telemetry init runs before the profile is read. PowerShell reads this from the user
+# environment when the process starts, so persisting via Export-Variable means the value
+# is in place for the *next* shell launch onward.
+Export-Variable 'POWERSHELL_TELEMETRY_OPTOUT' '1'
 
 # Enable processing of ANSI sequences in ConEmu.
 Export-Variable 'ConEmuANSI' 'ON'
@@ -54,10 +71,10 @@ Export-Variable 'VISUAL_LINE_NUMBER_FORMAT' 'code --goto {0}:{1}'
 
 Export-Variable 'SCOOP' "${Env:UserProfile}\scoop"
 
-# Use fd for fzf if available.
-if ($null -ne $(Get-Command fd -ErrorAction 'Ignore')) {
-    Export-Variable 'FZF_DEFAULT_COMMAND' "fd --type file"
-}
+# Use fd as the default fzf source. Set unconditionally — Export-Variable skips the
+# expensive User-scope broadcast when the value is already set, and if fd is uninstalled
+# fzf simply falls back to its built-in walker (no crash).
+Export-Variable 'FZF_DEFAULT_COMMAND' "fd --type file"
 
 # Counterpart to the existing $Profile variable pointing to a local profile not synced with dotfiles.
 # This is intentionally placed directly in the `Global` scope rather than the `Env` scope to match $Profile.

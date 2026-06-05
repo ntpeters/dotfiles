@@ -32,3 +32,5 @@ If ($Script:IsOsWindows -Ne $False) {
 # Legacy TabExpansion is still used by pshazz tab completions.
 . $Script:ScriptDirectory\functions\TabExpansionShim.ps1
 Export-ModuleMember -Function TabExpansion2
+
+. $Script:ScriptDirectory\functions\Register-RgArgumentCompleter.ps1
