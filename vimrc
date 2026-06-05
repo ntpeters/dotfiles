@@ -87,7 +87,13 @@ let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 let g:loaded_logipat           = 1
 
+" Disable gutentags for now since I'm not working in langs that need it
+let g:gutentags_enabled = 0
 let g:gutentags_modules = ['ctags']
+call ntpeters#util#ensureDirectory('~/.vim/gutentags')
+let g:gutentags_cache_dir = '~/.vim/gutentags'
+let g:gutentags_background_update = 1
+let g:gutentags_generate_on_write = 0
 
 " Tell vim-whitespace to strip whitespace on save
 let g:strip_whitespace_on_save = 1
@@ -159,7 +165,10 @@ augroup vimrc
     autocmd BufWinEnter ?* if ntpeters#util#shouldRestoreView() | silent! loadview | endif
 
     " Highlight anything beyond column 120 in red
-    autocmd BufWinEnter,BufWinLeave * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
+    autocmd BufWinEnter * call s:RefreshOver120Match()
+
+    " Bound syntax sync work on large files
+    autocmd BufEnter * :syntax sync minlines=200 maxlines=500
 
     autocmd ColorScheme * highlight QuickScopePrimary ctermfg=119 ctermbg=22 cterm=underline guifg='#87ff5f' guibg='#005f00' gui=underline
     autocmd ColorScheme * highlight QuickScopeSecondary ctermfg=117 ctermbg=55 cterm=underline guifg='#87dfff' guibg='#5f00af' gui=underline
@@ -173,6 +182,13 @@ augroup vimrc
     " linked: CursorLineNr -> LightlineLeft_active_0
     autocmd ModeChanged * redrawstatus
 augroup END
+
+function! s:RefreshOver120Match() abort
+    if exists('w:m2')
+        silent! call matchdelete(w:m2)
+    endif
+    let w:m2 = matchadd('ErrorMsg', '\%>120v.\+', -1)
+endfunction
 
 set autoindent
 set smartindent
@@ -210,6 +226,11 @@ set autowrite
 " Shorten messages to avoid 'hit enter' prompts
 set shortmess=at
 
+" Faster CursorHold / gitgutter refresh (default 4000)
+set updatetime=400
+" Time out slow regex highlighting quickly to keep UI responsive (default 2000)
+set redrawtime=1000
+
 set ignorecase
 set smartcase
 set gdefault
@@ -237,7 +258,10 @@ set modelines=3
 set signcolumn=yes
 
 " Set shortcut for paste mode
-set pastetoggle=<F10>
+" This option is no longer supported by nvim
+if !has('nvim')
+    set pastetoggle=<F10>
+endif
 
 " Enable mouse support for Visual and Normal modes
 set mouse=vn
@@ -248,7 +272,10 @@ set ttyfast
 
 " Must be set before GUI is loaded, don't move to gvimrc
 " Disable menus, copy visual selection to clipboard, and preserve window sizing
-set guioptions=Mak
+" This option is no longer supported by nvim
+if !has('nvim')
+    set guioptions=Mak
+endif
 
 " Enable persistent undo, and put undo files in their own directory to prevent
 " pollution of project directories
@@ -430,6 +457,65 @@ highlight CursorColumn ctermbg=232
 
 " Link the cursor line highlight to the active mode highlight from Lightline
 highlight! link CursorLineNr LightlineLeft_active_0
+
+" Toggle expensive cursor decorations off during fast navigation (held keys)
+let s:fastnav_timer = -1
+let s:fastnav_disabled = 0
+let s:fastnav_last = 0
+let s:fastnav_saved_cc = ''
+
+function! s:FastNavOnMove() abort
+    let l:now = reltimefloat(reltime())
+    let l:dt = l:now - s:fastnav_last
+    let s:fastnav_last = l:now
+
+    if l:dt < 0.05 && !s:fastnav_disabled
+        let s:fastnav_saved_cc = &l:colorcolumn
+        setlocal nocursorline nocursorcolumn colorcolumn=
+        if exists(':NoMatchParen')
+            silent! NoMatchParen
+        endif
+        let s:fastnav_disabled = 1
+    endif
+
+    if s:fastnav_timer != -1
+        call timer_stop(s:fastnav_timer)
+    endif
+    let s:fastnav_timer = timer_start(150, function('s:FastNavRestore'))
+endfunction
+
+function! s:FastNavRestore(timer) abort
+    if s:fastnav_disabled
+        setlocal cursorline cursorcolumn
+        let &l:colorcolumn = s:fastnav_saved_cc
+        if exists(':DoMatchParen')
+            silent! DoMatchParen
+        endif
+        let s:fastnav_disabled = 0
+    endif
+    let s:fastnav_timer = -1
+endfunction
+
+augroup FastNavCursorDecor
+    autocmd!
+    autocmd CursorMoved * call s:FastNavOnMove()
+augroup END
+
+" Replace delimitMate's BS mapping with a faster <expr> version. The default
+" uses `<C-R>=delimitMate#BS()<CR>` which routes every keystroke through the
+" typeahead buffer and triggers a full redraw cycle, causing visible input lag
+" on held BS. <expr> mappings substitute inline without that round-trip.
+function! s:OptimizeDelimitMateBS() abort
+    silent! iunmap <buffer> <BS>
+    silent! iunmap <buffer> <C-h>
+    inoremap <buffer> <silent> <expr> <BS> delimitMate#WithinEmptyPair() ? "\<BS>\<Del>" : "\<BS>"
+    inoremap <buffer> <silent> <expr> <C-h> delimitMate#WithinEmptyPair() ? "\<BS>\<Del>" : "\<BS>"
+endfunction
+
+augroup MyDelimitMatePerf
+    autocmd!
+    autocmd User delimitMate_map call s:OptimizeDelimitMateBS()
+augroup END
 
 " Load local vim config if it exists
 let s:localRcPath = glob('~/.vimrc.local')
