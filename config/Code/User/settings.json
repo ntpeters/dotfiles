@@ -1,7 +1,7 @@
 {
     "team.showWelcomeMessage": false,
 
-    "editor.fontFamily": "FuraCode NF",
+    "editor.fontFamily": "'FiraCode Nerd Font', 'Fira Code', Menlo, 'Noto Sans Mono', 'DejaVu Sans Mono', 'Cascadia Code', Consolas, monospace",
     "editor.fontLigatures": true,
     "editor.renderWhitespace": "all",
     "editor.lineHeight": 22,
@@ -28,7 +28,7 @@
     ],
     "window.titleBarStyle": "custom",
     "clang.diagnostic.enable": true,
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "workbench.colorTheme": "SilkCircuit Glow",
     "workbench.iconTheme": "eq-material-theme-icons-palenight",
     "workbench.colorCustomizations": {
         "settings.modifiedItemForeground": "#2979FF"
@@ -94,7 +94,7 @@
     },
     "terminal.integrated.shell.windows": "pwsh.exe",
     "terminal.integrated.shellArgs.windows": [],
-    "workbench.preferredHighContrastColorTheme": "Default Dark+",
+    "workbench.preferredHighContrastColorTheme": "Dark+",
     "window.autoDetectHighContrast": false,
     "workbench.productIconTheme": "fluent-icons",
     "arduino.path": "C:\\Program Files (x86)\\Arduino",
@@ -105,5 +105,9 @@
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
-    }
+    },
+    "git.openRepositoryInParentFolders": "always",
+    "terminal.integrated.useWslProfiles": false,
+    "terminal.integrated.automationProfile.windows": {},
+    "github.copilot.nextEditSuggestions.enabled": true
 }
