@@ -115,6 +115,12 @@ Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock {
     }
 }
 
+# Dynamic command-existence highlighting (zsh-style). Registered AFTER all other PSReadLine
+# key-handler setup (Tab->MenuComplete line 85, PSFzf chords above) so the bulk printable-char
+# binding cannot clobber them. Paints unresolved commands red, aliases green, and leaves valid
+# commands' white-on-blue (from syntax-colors.ps1) intact.
+. "${Env:UserProfile}\.config\powershell\command-highlighting.ps1"
+
 # Import custom functions
 $Util = "${Env:UserProfile}\.config\powershell\ntpetersUtil.psm1"
 If (Test-Path($Util)) {
