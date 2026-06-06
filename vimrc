@@ -258,8 +258,7 @@ set modelines=3
 set signcolumn=yes
 
 " Set shortcut for paste mode
-" This option is no longer supported by nvim
-if !has('nvim')
+if exists('+pastetoggle')
     set pastetoggle=<F10>
 endif
 
@@ -272,8 +271,7 @@ set ttyfast
 
 " Must be set before GUI is loaded, don't move to gvimrc
 " Disable menus, copy visual selection to clipboard, and preserve window sizing
-" This option is no longer supported by nvim
-if !has('nvim')
+if exists('+guioptions')
     set guioptions=Mak
 endif
 
