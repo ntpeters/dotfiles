@@ -1,5 +1,5 @@
-﻿{
-	"plugins": [ "git2", "aliases", "dircolors", "resetcolor", "admin", "var" ],
+{
+	"plugins": [ "git2", "dircolors", "resetcolor", "admin", "var" ],
 	"prompt": [
 		[ "Red",            "", "$var_pwsh_ansi_red$admin_lbracket"],
 		[ "Red",            "", "$var_pwsh_ansi_red$admin"],

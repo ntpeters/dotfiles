@@ -17,11 +17,46 @@ if ([Console]::OutputEncoding.CodePage -ne 65001) {
 # splitMode: duplicate open new panes in the current directory. Wired via
 # LocationChangedAction so it fires only when the CWD changes (not on every prompt),
 # making it effectively free per-keystroke and independent of pshazz.
-$ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = {
-    param($_, $eventArgs)
-    [Console]::Write("$([char]27)]9;9;`"$($eventArgs.NewPath.ProviderPath)`"$([char]27)\")
+#$ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = {
+    #param($_, $eventArgs)
+    #[Console]::Write("$([char]27)]9;9;`"$($eventArgs.NewPath.ProviderPath)`"$([char]27)\")
+#}
+#[Console]::Write("$([char]27)]9;9;`"$($PWD.ProviderPath)`"$([char]27)\")
+
+$Global:__LastHistoryId = -1
+
+function Global:__Terminal-Get-LastExitCode {
+  if ($? -eq $True) {
+    return 0
+  }
+  $LastHistoryEntry = $(Get-History -Count 1)
+  $IsPowerShellError = $Error[0].InvocationInfo.HistoryId -eq $LastHistoryEntry.Id
+  if ($IsPowerShellError) {
+    return -1
+  }
+  return $LastExitCode
 }
-[Console]::Write("$([char]27)]9;9;`"$($PWD.ProviderPath)`"$([char]27)\")
+
+function wrap_prompt {
+  $gle = $(__Terminal-Get-LastExitCode);
+  $LastHistoryEntry = $(Get-History -Count 1)
+  if ($Global:__LastHistoryId -ne -1) {
+    if ($LastHistoryEntry.Id -eq $Global:__LastHistoryId) {
+      $out += "`e]133;D`a"
+    } else {
+      $out += "`e]133;D;$gle`a"
+    }
+  }
+  $loc = $($executionContext.SessionState.Path.CurrentLocation);
+  $out += "`e]133;A$([char]07)";
+  $out += "`e]9;9;`"$loc`"$([char]07)";
+
+  $out += $Global:__OriginalPrompt.Invoke(); # <-- This line adds the original prompt back
+
+  $out += "`e]133;B$([char]07)";
+  $Global:__LastHistoryId = $LastHistoryEntry.Id
+  return $out
+}
 
 # Defer pshazz init to the first prompt invocation. This moves pshazz's ~330ms cost off
 # the profile-load critical path; the first prompt blocks for that duration but the
@@ -33,6 +68,8 @@ if (-not $pshazz) {
         Remove-Item function:\global:prompt
         pshazz init
         if (Test-Path function:\global:prompt) {
+            $Global:__OriginalPrompt = $function:Prompt
+            $function:prompt = $function:wrap_prompt
             & $function:prompt
         } else {
             "PS $($PWD.Path)> "
